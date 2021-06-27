@@ -1,0 +1,43 @@
+2021-06-07 13:48:52,701 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 13:48:52,708 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 13:49:09,164 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 13:49:09,170 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:21:53,523 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:21:53,529 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:22:56,704 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:22:56,711 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:24:04,523 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:24:04,529 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:25:49,459 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:26:17,458 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:26:47,064 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:27:00,981 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:28:38,756 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:32:20,890 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:33:02,610 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:33:02,616 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:34:37,782 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:34:37,788 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:52:43,986 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:53:59,988 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:54:15,836 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:57:11,965 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:57:35,958 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 15:59:59,309 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 16:01:48,195 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 16:45:48,025 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 16:45:48,032 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 16:49:47,492 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 16:49:47,498 ERROR c.r.a.m.d.j.JdbcAdminDao [main] No operations allowed after connection closed.
+2021-06-07 16:51:04,762 ERROR c.r.a.m.d.j.JdbcAdminDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-07 16:51:19,048 ERROR c.r.a.m.d.j.JdbcAdminDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-07 17:37:12,964 ERROR c.r.a.m.d.j.JdbcUserDao [main] Field 'id' doesn't have a default value
+2021-06-07 18:03:40,125 ERROR c.r.a.m.d.j.JdbcUserDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-07 18:07:54,401 ERROR c.r.a.m.d.j.JdbcUserDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-07 18:08:09,641 ERROR c.r.a.m.d.j.JdbcUserDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-07 18:10:29,095 ERROR c.r.a.m.d.j.JdbcUserDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-07 18:10:35,914 ERROR c.r.a.m.d.j.JdbcUserDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-07 18:10:53,689 ERROR c.r.a.m.d.j.JdbcUserDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-07 18:17:10,268 ERROR c.r.a.m.d.j.JdbcUserDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-07 19:01:17,974 ERROR c.r.a.m.d.j.JdbcAdminDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-07 19:02:42,023 ERROR c.r.a.m.d.j.JdbcAdminDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
