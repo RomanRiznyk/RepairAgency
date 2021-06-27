@@ -34,7 +34,6 @@ public class Util {
 
         boolean isFirstUser = false;
         if(loggedUsers == null){
-
             loggedUsers = new HashSet<>();
             isFirstUser = true;
         }
@@ -43,10 +42,8 @@ public class Util {
             request.getSession().getServletContext().setAttribute("loggedUsers", loggedUsers);
         }
 
-
         request.getSession().setAttribute(USER, user);
         request.getSession().setAttribute(ROLE, user.getRole()); // todo without role and login only user entity
-        //request.getSession().setAttribute(EMAIL, user.getEmail());
         request.getSession().setAttribute(LOGIN, user.getLogin()); // todo without role and login only user entity
         request.setAttribute(LOGIN, user.getLogin());
         logger.info(user.getLogin() + LOGGED_SUCCESSFULLY_WITH_ROLE + user.getRole());//Account.Role.valueOf(user.getRole())

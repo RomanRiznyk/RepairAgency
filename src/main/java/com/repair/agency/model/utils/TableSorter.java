@@ -2,6 +2,7 @@ package com.repair.agency.model.utils;
 
 import com.repair.agency.model.entity.Receipt;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class TableSorter {
@@ -9,6 +10,7 @@ public class TableSorter {
         if (sortingType == null) {
             return;
         }
+
         switch (sortingType) {
             case "ByDate":
                 receiptList.sort((o1, o2) -> o2.getCreateDate().compareTo(o1.getCreateDate()));
@@ -23,4 +25,6 @@ public class TableSorter {
                 break;
         }
     }
+
+
 }

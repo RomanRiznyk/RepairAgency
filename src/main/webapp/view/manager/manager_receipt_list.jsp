@@ -28,8 +28,8 @@
         .title {
             max-width: 50px;
             word-wrap: break-word;
-            /*overflow: hidden;*/
-            /*text-overflow: ellipsis;*/
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     </style>
 </head>
@@ -44,14 +44,12 @@
             <c:when test="${sessionScope.lang == null || 'en'.equals(sessionScope.lang)}">
                 <form action="manager" method="post">
                     <input type="hidden" name="lang" value="ua">
-                    <input type="hidden" name="receiptListForLang" value="${requestScope.receiptList}">
-                    <input type="hidden" name="command" value="managerReceiptList"> <%--TODO hide .jsp here--%>
+                    <input type="hidden" name="receiptListForLang" value="${sessionScope.receiptList}">
                     <input type="submit" value="<fmt:message key='Ua'/>" class="w-100 btn btn-outline-secondary">
                 </form>
                 <form action="manager" method="post" class="mx-2">
                     <input type="hidden" name="lang" value="en">
-                    <input type="hidden" name="receiptListForLang" value="${requestScope.receiptList}">
-                    <input type="hidden" name="command" value="managerReceiptList"> <%--TODO hide .jsp here--%>
+                    <input type="hidden" name="receiptListForLang" value="${sessionScope.receiptList}">
                     <input type="submit" value="<fmt:message key='En'/>" class="w-100 btn btn-secondary">
                 </form>
             </c:when>
@@ -59,33 +57,25 @@
             <c:when test="${'ua'.equals(sessionScope.lang)}">
                 <form action="manager" method="post">
                     <input type="hidden" name="lang" value="ua">
-                    <input type="hidden" name="receiptListForLang" value="${requestScope.receiptList}">
-                    <input type="hidden" name="command" value="managerReceiptList"> <%--TODO hide .jsp here--%>
+                    <input type="hidden" name="receiptListForLang" value="${sessionScope.receiptList}">
                     <input type="submit" value="<fmt:message key='Ua'/>" class="w-100 btn btn-secondary">
                 </form>
                 <form action="manager" method="post" class="mx-2">
                     <input type="hidden" name="lang" value="en">
-                    <input type="hidden" name="receiptListForLang" value="${requestScope.receiptList}">
-                    <input type="hidden" name="command" value="managerReceiptList"> <%--TODO hide .jsp here--%>
+                    <input type="hidden" name="receiptListForLang" value="${sessionScope.receiptList}">
                     <input type="submit" value="<fmt:message key='En'/>" class="w-100 btn btn-outline-secondary">
                 </form>
             </c:when>
         </c:choose>
     </div>
     <div class="d-flex justify-content-between">
-            <%--some text in the center of header--%>
     </div>
     <%-- ---------------MAIN and LOGOUT BUTTONS --------------- --%>
     <div class="col-md-3 d-flex justify-content-end">
-                    <%--<form action="top_up_account" method="post">
-                        <input type="hidden" name="command" value="topUpAccount">
-                        <input type="submit" value="<fmt:message key='TopUpAccount'/>" class="btn btn-outline-secondary me-2">
-                    </form>--%>
                 <form action="/repair" method="post"> <%--TODO strange /repair--%>
                     <input type="submit" value="<fmt:message key='MainPage'/>" class="btn btn-outline-secondary me-2">
                 </form>
                 <form action="/repair/logout" method="post" class="m-r-2">
-                    <input type="hidden" name="command" value="logOut">
                     <input type="submit" value="<fmt:message key='logout'/>" class="btn btn-secondary me-2">
                 </form>
             </div>
@@ -93,10 +83,7 @@
     <%--------------- MAIN BODY -------------------%>
     <h3 class="fw-normal"><fmt:message key='Hello'/> <span style='color: blue;'>${sessionScope.login}</span>! </h3>
         <%--------------- ERRORS MESSAGES -------------------%>
-<%--<h3 class="fw-normal"><fmt:message key='Hello'/> <span style='color: blue;'>${sessionScope.login}</span>! </h3>--%>
-    <%--<h3 class="fw-normal"><fmt:message key='YourBalance'/> <span style='color: green;'>${sessionScope.user.balance}</span>$--%>
         <br>
-
     <c:choose>
         <c:when test="${errorMessage == 'AlreadyLoggedIN'}">
             <p style="color:#ff0000"><fmt:message key='AlreadyLoggedIN'/></p><br/>
@@ -105,8 +92,6 @@
             <p style="color:#ff0000"><fmt:message key='HasNoRights'/></p><br/>
         </c:when>
     </c:choose>
-
-
     <%----------------------- TABLE HEADER and SORTING BUTTONS ---------------------%>
     <div class="d-flex flex-wrap justify-content-between py-1 mb-3">
 
@@ -118,39 +103,68 @@
         </c:choose>
 
             <div class="d-flex justify-content-end">
-                <%-------------- SORT BY ------------%>
-                <div class="dropdown d-flex justify-content-end mx-1">  <%--d-flex justify-content-end--%>
-                    <%--<div class="dropdown">--%>
+                    <%-------------- SORT BY DATE------------%>
+                    <div class="dropdown d-flex justify-content-end mx-1">
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <fmt:message key="SortBy"/>
+                            <fmt:message key="SortByDate"/>
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <c:forEach var="sort" items="${sortBy}">
+                            <c:forEach var="sortAscDesc" items="${sortByAsc}">
                                 <form action="manager" method="post">
-                                    <input type="hidden" name="command" value="managerReceiptList">
-                                    <input type="hidden" name="sortingType" value="${sort}">
-                                    <input class="dropdown-item" type="submit" value="<fmt:message key="${sort}"/>">
+                                    <input type="hidden" name="sortType" value='ByDate'>
+                                    <input type="hidden" name="sortAscDesc" value="${sortAscDesc}">
+                                    <input class="dropdown-item" type="submit" value="<fmt:message key="${sortAscDesc}"/>">
                                 </form>
                             </c:forEach>
                         </div>
-                    <%--</div>--%>
+                    </div>
+                    <%-------------- SORT BY PRICE------------%>
+                    <div class="dropdown d-flex justify-content-end mx-1">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <fmt:message key="SortByPrice"/>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <c:forEach var="sortAscDesc" items="${sortByAsc}">
+                                <form action="manager" method="post">
+                                    <input type="hidden" name="sortType" value='ByPrice'>
+                                    <input type="hidden" name="sortAscDesc" value="${sortAscDesc}">
+                                    <input class="dropdown-item" type="submit" value="<fmt:message key="${sortAscDesc}"/>">
+                                </form>
+                            </c:forEach>
+                        </div>
+                    </div>
+
+                <div class="dropdown d-flex justify-content-end mx-1">
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <fmt:message key="SortByStatus"/>
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <c:forEach var="sortAscDesc" items="${sortByAsc}">
+                                <form action="manager" method="post">
+                                    <input type="hidden" name="sortType" value='ByStatus'>
+                                    <input type="hidden" name="sortAscDesc" value="${sortAscDesc}">
+                                    <input class="dropdown-item" type="submit" value="<fmt:message key="${sortAscDesc}"/>">
+                                </form>
+                            </c:forEach>
+                        </div>
                 </div>
                 <%-------------- MASTER FILTER ------------%>
                 <div class="dropdown mx-1">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <fmt:message key="MasterFilter"/>
+                        <fmt:message key="FilterByMaster"/>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <form action="manager" method="post">
-                            <input type="hidden" name="command" value="managerReceiptList">
-                            <input type="hidden" name="masterLogin" value="All">
-                            <input class="dropdown-item" type="submit" value="All engineers">
+                            <input type="hidden" name="masterLogin" value="All masters">
+                            <input class="dropdown-item" type="submit" value="All masters">
                         </form>
                         <c:forEach var="master" items="${masterList}">
                             <form action="manager" method="post">
-                                <input type="hidden" name="command" value="managerReceiptList">
+                                <input type="hidden" name="filterType" value="ByMaster">
                                 <input type="hidden" name="masterLogin" value="${master.login}">
                                 <input class="dropdown-item" type="submit" value="${master.login}">
                             </form>
@@ -161,12 +175,12 @@
                 <div class="dropdown mx-1">
                     <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownStatusButton"
                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <fmt:message key="StatusFilter"/>
+                        <fmt:message key="FilterByStatus"/>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownStatusButton">
                         <c:forEach var="status" items="${statusList}">
                             <form action="manager" method="post">
-                                <input type="hidden" name="command" value="managerReceiptList">
+                                <input type="hidden" name="filterType" value="ByStatus">
                                 <input class="dropdown-item" type="submit" name="status" value="${status}">
                             </form>
                         </c:forEach>
@@ -176,7 +190,7 @@
     </div>
 
     <c:choose>
-        <c:when test="${requestScope.receiptList.size() == 0}">
+        <c:when test="${sessionScope.receiptList.size() == 0}">
             <h5><fmt:message key='YouHaveNoReceipts'/></h5>
         </c:when>
     </c:choose>  <%--NO RECEIPTS MESSAGE--%>
@@ -187,7 +201,7 @@
             <tr>
                 <th class="title"><fmt:message key='Id'/></th>
                 <th class="title"><fmt:message key='Item'/></th>
-                <th class="title"><fmt:message key='ProblemDescription'/></th>
+                <th class="title"><fmt:message key='Description'/></th>
                 <th class="title"><fmt:message key='Price'/></th>
                 <th class="title"><fmt:message key='Date'/></th>
                 <th class="title"><fmt:message key='Status'/></th>
@@ -201,20 +215,37 @@
 
         <tbody>
         <%--<tr>--%>
-            <c:forEach var="receipt" items="${receiptList}">
+            <c:forEach var="receipt" items="${sessionScope.receiptList}">
                 <tr>
                     <td class="title">${receipt.id}</td>
                     <td class="title">${receipt.item}
                         <form action="manager/editReceipt" method="get" class="m-r-2">
                             <input type="hidden" name="receiptID" value="${receipt.id}">
-                            <input type="hidden" name="command" value="editReceipt">
                             <input type="submit" value="<fmt:message key='Edit'/>" class="btn btn-secondary me-1">
                         </form>
                     </td>
                     <td class="title">${receipt.description}</td>
                     <td class="title">${receipt.price}</td>
                     <td class="title">${receipt.createDate}</td>
-                    <td class="title">${receipt.status}</td>
+                    <td class="title">
+                        <c:choose>
+                            <c:when test="${'Paid'.equals(receipt.status)}">
+                                <p style="color: green"><fmt:message key='StatusPaid'/>
+                            </c:when>
+                            <c:when test="${'Canceled'.equals(receipt.status)}">
+                                <p style="color: red"><fmt:message key='StatusCanceled'/>
+                            </c:when>
+                            <c:when test="${'Waiting for payment'.equals(receipt.status)}">
+                                <p style="color: dodgerblue"><fmt:message key='StatusWaitingPayment'/>
+                            </c:when>
+                            <c:when test="${'In work'.equals(receipt.status)}">
+                                 <p style="color: coral"><fmt:message key='StatusInWork'/>
+                            </c:when>
+                            <c:when test="${'Done'.equals(receipt.status)}">
+                                 <p style="color: lightseagreen"><fmt:message key='StatusDone'/>
+                            </c:when>
+                        </c:choose>
+                    </td>
                     <td class="title">${receipt.user_id}</td>
                     <td class="title">${receipt.userLogin}</td>
                     <td class="title">${receipt.master_id}</td>
@@ -234,19 +265,15 @@
 
         </tbody>
     </table>
-
-
-
             <footer>
-                    <%--${receiptList}--%>
                 <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                    © 2021 Copyright:
-                    <a class="text-reset fw-bold">repair-agency.com</a>
+                    © :
+                    <a class="text-reset fw-bold">RepairAgency</a>
                 </div>
             </footer>
             </c:when>
             <c:when test="${!sessionScope.role.equals('MANAGER')}">
-                <h2><fmt:message key='PleaseLoginAsManager'/></h2> <%--// TODO BUTTON LOGIN--%>
+                <h2 style="color: coral"><fmt:message key='PleaseLoginAsManager'/>!</h2>
             </c:when>
             </c:choose>
 </body>

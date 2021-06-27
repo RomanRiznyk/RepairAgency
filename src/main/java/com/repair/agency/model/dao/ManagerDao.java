@@ -14,7 +14,7 @@ public interface ManagerDao extends GenericDao<Receipt> {
 
     boolean updateReceiptStatus(int receiptId, String newStatus);
 
-    List<Receipt> selectAllReceipts();
+    List<Receipt> getAllReceipts();
 
     Receipt getReceiptById(int id) throws SQLException;
 
@@ -31,4 +31,10 @@ public interface ManagerDao extends GenericDao<Receipt> {
     boolean updateReceiptStatusAndReturnMoney(int receiptID, String status);
 
     boolean updateReceiptStatusAndReturnMoney1Method(int receiptID, String status);
+
+    List<Receipt> getReceiptsSortedByDate(String ascType);
+
+    List<Receipt> getReceiptsSortedByStatus(String ascType);
+
+    List<Receipt> getReceiptsSortedByPrice(String ascType);
 }

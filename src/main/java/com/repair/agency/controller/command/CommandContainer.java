@@ -12,17 +12,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CommandContainer {
-    private static final Map<String, Command> commands = new HashMap<>();
+    private final Map<String, Command> commands;
 
-    static {// todo static
+    public CommandContainer() {// todo static
+        commands = new HashMap<>();
         commands.put("/logout", new LogoutCommand());
         commands.put("/login", new LoginPageCommand());
         commands.put("/register", new RegisterPageCommand());
         commands.put("/account", new ValidationCommand(new UserService()));
         commands.put("/user/account", new ValidationCommand(new UserService()));
         commands.put("/manager/account", new ValidationCommand(new UserService()));
-        commands.put("/view/account", new ValidationCommand(new UserService()));
-
+        //commands.put("/view/account", new ValidationCommand(new UserService()));
         commands.put("/master/account", new ValidationCommand(new UserService()));
         commands.put("/processRegister", new ProcessRegistrationCommand(new UserService()));
         commands.put("/manager/editReceipt", new EditReceiptCommand(new ManagerService(), new UserService(), new MasterService()));
@@ -36,7 +36,7 @@ public class CommandContainer {
         commands.put("/user/addFeedback", new AddFeedbackCommand(new UserService()));
     }
 
-    public static Command get(String commandName) {
-        return commands.getOrDefault(commandName, new ErrorPageCommand());  // todo how r -> works;
+    public Command get(String commandName) {
+        return commands.getOrDefault(commandName, (r,t)->"/error");
     }
 }

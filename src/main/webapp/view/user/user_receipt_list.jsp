@@ -44,13 +44,11 @@
                     <c:when test="${sessionScope.lang == null || 'en'.equals(sessionScope.lang)}">
                         <form action="user" method="post">
                             <input type="hidden" name="lang" value="ua">
-                            <input type="hidden" name="command" value="user">
                             <input type="hidden" name="login" value=${sessionScope.login}>
                             <input type="submit" value="<fmt:message key='Ua'/>" class="w-100 btn btn-outline-secondary">
                         </form>
                         <form action="user" method="post" class="mx-2">
                             <input type="hidden" name="lang" value="en">
-                            <input type="hidden" name="command" value="user">
                             <input type="hidden" name="login" value=${login}>
                             <input type="submit" value="<fmt:message key='En'/>" class="w-100 btn btn-secondary">
                         </form>
@@ -58,13 +56,11 @@
                     <c:when test="${'ua'.equals(sessionScope.lang)}">
                         <form action="user" method="post">
                             <input type="hidden" name="lang" value="ua">
-                            <input type="hidden" name="command" value="user">
                             <input type="hidden" name="login" value=${login}>
                             <input type="submit" value="<fmt:message key='Ua'/>" class="w-100 btn btn-secondary">
                         </form>
                         <form action="user" method="post" class="mx-2">
                             <input type="hidden" name="lang" value="en">
-                            <input type="hidden" name="command" value="user">
                             <input type="hidden" name="login" value=${login}>
                             <input type="submit" value="<fmt:message key='En'/>" class="w-100 btn btn-outline-secondary">
                         </form>
@@ -78,14 +74,12 @@
              <%----------------------- NEW ORDER, MAIN and LOGOUTBUTTONS ---------------------%>
             <div class="col-md-3 d-flex justify-content-end">
                 <form action="user/new_order" method="post">
-                    <input type="hidden" name="command" value="newReceipt">
                     <input type="submit" value="<fmt:message key='NewOrder'/>" class="btn btn-outline-secondary me-2">
                 </form>
                 <form action="/repair" method="post">
                     <input type="submit" value="<fmt:message key='MainPage'/>" class="btn btn-outline-secondary me-2">
                 </form>
                 <form action="/repair/logout" method="post">
-                    <input type="hidden" name="command" value="logOut" class="m-r-2">
                     <input type="submit" value="<fmt:message key='logout'/>" class="btn btn-secondary me-2">
                 </form>
             </div>
@@ -158,7 +152,6 @@
                                         <input type="hidden" name="item" value="${receipt.item}">
                                         <%--<input type="hidden" name="description" value="${receipt.description}"> --%><%--// todo remove it after testing--%>
                                         <input type="hidden" name="id" value="${receipt.id}">
-                                        <input type="hidden" name="command" value="feedback">     <%--todo hidden parameters change in command code--%>
                                         <input type="submit" value="<fmt:message key='PostFeedback'/>" class="btn btn-outline-secondary me-2">
                                     </form>
                                 </c:when>
@@ -178,8 +171,8 @@
         </footer>
     </c:when>
     <c:when test="${!sessionScope.role.equals('USER')}">
-                    <h2><fmt:message key='PleaseLoginAsUser'/></h2>  <%--// TODO BUTTON LOGIN--%>
-    </c:when>
+            <h2 style="color: coral"><fmt:message key='PleaseLoginAsUser'/>!</h2>
+     </c:when>
 </c:choose>
 </body>
 </html>

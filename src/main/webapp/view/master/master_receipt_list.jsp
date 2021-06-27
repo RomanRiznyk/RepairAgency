@@ -39,13 +39,11 @@
                         <form action="master" method="post">
                             <input type="hidden" name="lang" value="ua">
                             <input type="hidden" name="receiptList" value="${requestScope.receiptList}">
-                            <input type="hidden" name="command" value="master"> <%--TODO hide .jsp here--%>
                             <input type="submit" value="<fmt:message key='Ua'/>" class="w-100 btn btn-outline-secondary">
                         </form>
                         <form action="master" method="post" class="mx-2">
                             <input type="hidden" name="lang" value="en">
                             <input type="hidden" name="receiptList" value="${requestScope.receiptList}">
-                            <input type="hidden" name="command" value="master"> <%--TODO hide .jsp here--%>
                             <input type="submit" value="<fmt:message key='En'/>" class="w-100 btn btn-secondary">
                         </form>
                     </c:when>
@@ -54,13 +52,11 @@
                         <form action="master" method="post">
                             <input type="hidden" name="lang" value="ua">
                             <input type="hidden" name="receiptList" value="${requestScope.receiptList}">
-                            <input type="hidden" name="command" value="master"> <%--TODO hide .jsp here--%>
                             <input type="submit" value="<fmt:message key='Ua'/>" class="w-100 btn btn-secondary">
                         </form>
                         <form action="master" method="post" class="mx-2">
                             <input type="hidden" name="lang" value="en">
                             <input type="hidden" name="receiptList" value="${requestScope.receiptList}">
-                            <input type="hidden" name="command" value="master"> <%--TODO hide .jsp here--%>
                             <input type="submit" value="<fmt:message key='En'/>" class="w-100 btn btn-outline-secondary">
                         </form>
                     </c:when>
@@ -72,7 +68,6 @@
                     <input type="submit" value="<fmt:message key='MainPage'/>" class="btn btn-outline-secondary me-2 mx-2">
                 </form>
                 <form action="/repair/logout" method="post" class="form">
-                    <input type="hidden" name="command" value="logOut">
                     <input type="submit" value="<fmt:message key='logout'/>" class="btn btn-secondary me-2">
                 </form>
             </div>
@@ -120,14 +115,6 @@
                 <td class="title">${receipt.createDate}</td>
                 <td class="title">- todo </td>
                 <td class="title">
-                    <%--<form action="receipt" method="post">
-                        <input type="hidden" name="receiptId" value="${receiptList.id}">
-                        <input type="hidden" name="command" value="master">
-                        <td class="title">
-                                ${receiptList.status}
-                            <input type="submit" value="<fmt:message key='ChangeStatus'/>" class="btn btn-outline-secondary me-2">
-                        </td>
-                    </form>--%>
                             ${receipt.status}
                     <c:choose>
                         <c:when test="${!receipt.status.equals('Waiting for payment')
@@ -141,13 +128,11 @@
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <form action="master" method="post">
-                                        <input type="hidden" name="command" value="master">
                                         <input type="hidden" name="receiptId" value="${receipt.id}">
                                         <input style="color: orange" class="dropdown-item" type="submit" name="newStatus"
                                                value="In work">
                                     </form>
                                     <form action="master" method="post">
-                                        <input type="hidden" name="command" value="master">
                                         <input type="hidden" name="receiptId" value="${receipt.id}">
                                         <input style="color: #1aa016" class="dropdown-item" type="submit" name="newStatus" value="Done">
                                     </form>
@@ -162,14 +147,12 @@
             </tbody>
         </table>
         <footer>
-
     <%-------------------------------- PAGINATION -----------------------%>
             <div class="d-flex flex-row justify-content-center">
                 <c:forEach var="i" begin="1" end="${pages}">
                     <c:choose>
                         <c:when test="${pages != 1}">
                             <form action="account" method="get">
-                                <input type="hidden" name="command" value="master">
                                 <input type="hidden" name="page" value="${i}">
                                 <input type="submit" class="btn btn-outline-secondary mx-1" value="${i}">
                             </form>
@@ -184,7 +167,7 @@
         </footer>
     </c:when>
     <c:when test="${!sessionScope.role.equals('MASTER')}">
-        <h2><fmt:message key='PleaseLoginAsMaster'/></h2> <%--TODO BUTTON LOGIN--%>
+        <h2 style="color: coral"><fmt:message key='PleaseLoginAsMaster'/>!</h2>
     </c:when>
 </c:choose>
 </body>

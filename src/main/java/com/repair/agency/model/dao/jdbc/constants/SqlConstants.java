@@ -65,4 +65,22 @@ public interface SqlConstants { //todo what type of class it should be?
     String GET_USER_LOGIN_BY_RECEIPT_ID = "SELECT login FROM user WHERE user.id IN(SELECT user_id FROM receipt WHERE id = ?);";
     String GET_RECEIPT_PRICE_BY_ID = "SELECT price FROM receipt WHERE id = ?";
     String GET_FEEDBACK_BY_ID = "SELECT feedback FROM receipt WHERE id=?";
+    String SELECT_ALL_RECEIPTS_WITH_MASTER_USER_LOGINS_BY_PRICE = "SELECT receipt.id, item, description, price, feedback, user_id, customer.login, master_id, masters.login, status, receipt.create_time, update_time\n" +
+            "FROM receipt LEFT JOIN user AS customer\n" +
+            "ON receipt.user_id = customer.id \n" +
+            "LEFT JOIN user AS masters\n" +
+            "ON receipt.master_id = masters.id\n" +
+            "ORDER BY price ";
+    String SELECT_ALL_RECEIPTS_WITH_MASTER_USER_LOGINS_BY_DATE = "SELECT receipt.id, item, description, price, feedback, user_id, customer.login, master_id, masters.login, status, receipt.create_time, update_time\n" +
+            "FROM receipt LEFT JOIN user AS customer\n" +
+            "ON receipt.user_id = customer.id \n" +
+            "LEFT JOIN user AS masters\n" +
+            "ON receipt.master_id = masters.id\n" +
+            "ORDER BY receipt.create_time ";
+    String SELECT_ALL_RECEIPTS_WITH_MASTER_USER_LOGINS_BY_STATUS = "SELECT receipt.id, item, description, price, feedback, user_id, customer.login, master_id, masters.login, status, receipt.create_time, update_time\n" +
+            "FROM receipt LEFT JOIN user AS customer\n" +
+            "ON receipt.user_id = customer.id \n" +
+            "LEFT JOIN user AS masters\n" +
+            "ON receipt.master_id = masters.id\n" +
+            "ORDER BY status ";
 }

@@ -43,7 +43,7 @@ public class MasterReceiptListCommand implements Command {
             }
         }
 
-        List<Receipt> receiptList = masterService.getAllReceipts(login);
+        List<Receipt> receiptList = masterService.getReceiptsByMaster(login);
         int pages = new PageCounter().count(receiptList.size(), ROWS_ON_PAGE);
         List<Receipt> pageReceiptList = new ListSplitter().getListByPage(page, ROWS_ON_PAGE, receiptList);
         request.setAttribute("pages", pages);

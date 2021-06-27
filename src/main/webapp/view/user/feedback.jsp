@@ -36,13 +36,11 @@
           <c:when test="${sessionScope.lang == null || 'en'.equals(sessionScope.lang)}">
             <form action="feedback" method="post">
               <input type="hidden" name="lang" value="ua">
-              <input type="hidden" name="command" value="feedback">
               <input type="hidden" name="login" value=${login}>
               <input type="submit" value="<fmt:message key='Ua'/>" class="w-100 btn btn-outline-secondary">
             </form>
             <form action="feedback" method="post" class="mx-2">
               <input type="hidden" name="lang" value="en">
-              <input type="hidden" name="command" value="feedback">
               <input type="hidden" name="login" value=${login}>
               <input type="submit" value="<fmt:message key='En'/>" class="w-100 btn btn-secondary">
             </form>
@@ -50,13 +48,11 @@
           <c:when test="${'ua'.equals(sessionScope.lang)}">
             <form action="feedback" method="post">
               <input type="hidden" name="lang" value="ua">
-              <input type="hidden" name="command" value="feedback">
               <input type="hidden" name="login" value=${login}>
               <input type="submit" value="<fmt:message key='Ua'/>" class="w-100 btn btn-secondary">
             </form>
             <form action="feedback" method="post" class="mx-2">
               <input type="hidden" name="lang" value="en">
-              <input type="hidden" name="command" value="feedback">
               <input type="hidden" name="login" value=${login}>
               <input type="submit" value="<fmt:message key='En'/>" class="w-100 btn btn-outline-secondary">
             </form>
@@ -66,14 +62,12 @@
         <%----------------------- RECEIPTS and MAIN PAGE BUTTONS ---------------------%>
       <div class="col-md-3 d-flex justify-content-end">
         <form action="/repair/user" method="post" class="m-r-2">
-          <input type="hidden" name="command" value="user">
           <input type="submit" value="<fmt:message key="Receipts"/>" class="btn btn-secondary me-2">
         </form>
         <form action="/repair" method="post">
           <input type="submit" value="<fmt:message key='MainPage'/>" class="btn btn-outline-secondary me-2">
         </form>
         <form action="/repair/logout" method="post">
-          <input type="hidden" name="command" value="logOut" class="m-r-2">
           <input type="submit" value="<fmt:message key='logout'/>" class="btn btn-outline-secondary me-2">
         </form>
       </div>
@@ -84,7 +78,6 @@
     <h3><fmt:message key='LeaveYourFeedbackOn'/> ${item}: </h3>
     <form action="addFeedback" method="post" class="m-r-2">
       <textarea class="form-control my-5" rows="10" name="feedback" placeholder="<fmt:message key='WriteYourFeedbackHere'/>" required></textarea>
-      <input type="hidden" name="command" value="addFeedback">
       <input type="hidden" name="id" value="${id}">
       <input type="submit" value="<fmt:message key='PostFeedback'/>" class="w-25 btn btn-secondary">
     </form>
@@ -96,7 +89,7 @@
     </footer>
   </c:when>
   <c:when test="${!sessionScope.role.equals('USER')}">
-    <h2><fmt:message key='PleaseLoginAsUser'/></h2>  <%--// TODO BUTTON LOGIN--%>
+    <h2 style="color: coral"><fmt:message key='PleaseLoginAsUser'/>!</h2>
   </c:when>
 </c:choose>
 </body>

@@ -10,7 +10,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,43 +18,43 @@ public class ManagerService {
     private static final Logger logger = LogManager.getLogger(JdbcManagerDao.class.getName());
 
     public boolean updateReceiptMaster(int engineerId, int invoiceId) {
-        boolean result = false;
+        boolean isSuccessful = false;
         try (ManagerDao managerDao = daoFactory.createManagerDao()) {
-            result = managerDao.updateReceiptMaster(invoiceId, engineerId);
+            isSuccessful = managerDao.updateReceiptMaster(invoiceId, engineerId);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return result;
+        return isSuccessful;
     }
 
     public boolean updateReceiptPrice(String price, int receiptId) {
-        boolean result = false;
+        boolean isSuccessful = false;
         try (ManagerDao managerDao = daoFactory.createManagerDao()) {
-            result = managerDao.updateReceiptPrice(receiptId, price);
+            isSuccessful = managerDao.updateReceiptPrice(receiptId, price);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return result;
+        return isSuccessful;
     }
 
     public boolean updateReceiptStatus(int receiptId, String newStatus) throws DBException{
-        boolean result = false;
+        boolean isSuccessful = false;
         try (ManagerDao managerDao = daoFactory.createManagerDao()) {
-            result = managerDao.updateReceiptStatus(receiptId, newStatus);
+            isSuccessful = managerDao.updateReceiptStatus(receiptId, newStatus);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return result;
+        return isSuccessful;
     }
 
     public List<Receipt> getAllReceipts() {
-        List<Receipt> invoicesList = new ArrayList<>();
+        List<Receipt> receiptList = new ArrayList<>();
         try (ManagerDao managerDao = daoFactory.createManagerDao()) {
-            invoicesList = managerDao.selectAllReceipts();
+            receiptList = managerDao.getAllReceipts();
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return invoicesList;
+        return receiptList;
     }
 
     public Receipt getReceipt(int id) {
@@ -89,13 +88,13 @@ public class ManagerService {
     }
 
     public List<Receipt> getReceiptsByStatus(String status) {
-        List<Receipt> invoicesList = new ArrayList<>();
+        List<Receipt> receiptList = new ArrayList<>();
         try (ManagerDao managerDao = daoFactory.createManagerDao()) {
-            invoicesList = managerDao.getReceiptListByStatus(status);
+            receiptList = managerDao.getReceiptListByStatus(status);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return invoicesList;
+        return receiptList;
     }
 
     public boolean updateUserAddBalance(String userLogin, BigDecimal oldBalance, BigDecimal addBalance) {
@@ -120,5 +119,35 @@ public class ManagerService {
             throw new DBException("Cant updateStatusAndReturnMoney", e);
         }
         return isSuccessful;
+    }
+
+    public List<Receipt> getAllReceiptsSortedByDate(String ascType) {
+        List<Receipt> receiptList = new ArrayList<>();
+        try (ManagerDao managerDao = daoFactory.createManagerDao()) {
+            receiptList = managerDao.getReceiptsSortedByDate(ascType);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return receiptList;
+    }
+
+    public List<Receipt> getAllReceiptsSortedByStatus(String ascType) {
+        List<Receipt> receiptList = new ArrayList<>();
+        try (ManagerDao managerDao = daoFactory.createManagerDao()) {
+            receiptList = managerDao.getReceiptsSortedByStatus(ascType);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return receiptList;
+    }
+
+    public List<Receipt> getAllReceiptsSortedByPrice(String ascType) {
+        List<Receipt> receiptList = new ArrayList<>();
+        try (ManagerDao managerDao = daoFactory.createManagerDao()) {
+            receiptList = managerDao.getReceiptsSortedByPrice(ascType);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+        }
+        return receiptList;
     }
 }

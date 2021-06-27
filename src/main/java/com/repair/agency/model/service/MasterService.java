@@ -38,7 +38,7 @@ public class MasterService {
         return receiptList;
     }
 
-    public List<Receipt> getAllReceipts(String login) {
+    public List<Receipt> getReceiptsByMaster(String login) {
         List<Receipt> receiptList = new ArrayList<>();
         try (MasterDao masterDao = daoFactory.createMasterDao()) {
             receiptList = masterDao.getAllReceipts(login);

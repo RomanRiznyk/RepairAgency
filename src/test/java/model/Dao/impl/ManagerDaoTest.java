@@ -71,7 +71,7 @@ public class ManagerDaoTest {
 
     @Test
     public void selectAllInvoicesTest() {
-        List<Receipt> receipts = adminDao.selectAllReceipts();
+        List<Receipt> receipts = adminDao.getAllReceipts();
         assertEquals(15, receipts.size());
     }
 

@@ -76,7 +76,7 @@ public class JdbcManagerDao implements ManagerDao {
     }
 
     @Override
-    public List<Receipt> selectAllReceipts() {
+    public List<Receipt> getAllReceipts() {
         List<Receipt> invoicesList = new ArrayList<>();
         try (Connection con = connection;
              Statement stmt = con.createStatement()) {
@@ -355,6 +355,72 @@ public class JdbcManagerDao implements ManagerDao {
         }
         return isSuccessful;
         }
+
+    @Override
+    public List<Receipt> getReceiptsSortedByDate(String ascType) {
+        List<Receipt> receipts = new ArrayList<>();
+        ResultSet rs = null;
+        try (Connection con = connection;
+             PreparedStatement pstmt = con.prepareStatement(SqlConstants.SELECT_ALL_RECEIPTS_WITH_MASTER_USER_LOGINS_BY_DATE + ascType)) {
+            //pstmt.setString(1, ascType);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Receipt receipt = receiptMapper.extractFromResultSet(rs);
+                receipt.setUserLogin(rs.getString("customer.login")); // todo into extractor
+                receipt.setMasterLogin(rs.getString("masters.login"));
+                receipts.add(receipt);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            close(rs);
+        }
+        return receipts;
+    }
+
+    @Override
+    public List<Receipt> getReceiptsSortedByStatus(String ascType) {
+        List<Receipt> receipts = new ArrayList<>();
+        ResultSet rs = null;
+        try (Connection con = connection;
+             PreparedStatement pstmt = con.prepareStatement(SqlConstants.SELECT_ALL_RECEIPTS_WITH_MASTER_USER_LOGINS_BY_STATUS + ascType)) {
+            //pstmt.setString(1, ascType);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Receipt receipt = receiptMapper.extractFromResultSet(rs);
+                receipt.setUserLogin(rs.getString("customer.login")); // todo into extractor
+                receipt.setMasterLogin(rs.getString("masters.login"));
+                receipts.add(receipt);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            close(rs);
+        }
+        return receipts;
+    }
+
+    @Override
+    public List<Receipt> getReceiptsSortedByPrice(String ascType) {
+        List<Receipt> receipts = new ArrayList<>();
+        ResultSet rs = null;
+        try (Connection con = connection;
+             PreparedStatement pstmt = con.prepareStatement(SqlConstants.SELECT_ALL_RECEIPTS_WITH_MASTER_USER_LOGINS_BY_PRICE + ascType)) {
+            //pstmt.setString(1, ascType);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Receipt receipt = receiptMapper.extractFromResultSet(rs);
+                receipt.setUserLogin(rs.getString("customer.login")); // todo into extractor
+                receipt.setMasterLogin(rs.getString("masters.login"));
+                receipts.add(receipt);
+            }
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        } finally {
+            close(rs);
+        }
+        return receipts;
+    }
 
     private boolean isFeedbackAbsent(int receiptId) {
         boolean isAbsent = false;
