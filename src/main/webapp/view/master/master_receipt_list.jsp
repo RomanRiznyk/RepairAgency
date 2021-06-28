@@ -147,19 +147,6 @@
             </tbody>
         </table>
         <footer>
-    <%-------------------------------- PAGINATION -----------------------%>
-            <%--<div class="d-flex flex-row justify-content-center">
-                <c:forEach var="i" begin="1" end="${pages}">
-                    <c:choose>
-                        <c:when test="${pages != 1}">
-                            <form action="account" method="get">
-                                <input type="hidden" name="page" value="${i}">
-                                <input type="submit" class="btn btn-outline-secondary mx-1" value="${i}">
-                            </form>
-                        </c:when>
-                    </c:choose>
-                </c:forEach>
-            </div>--%>
         </footer>
     </c:when>
     <c:when test="${!sessionScope.role.equals('MASTER')}">

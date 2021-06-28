@@ -16,26 +16,15 @@ public class PaginationUtil {
     }
     public static List<Receipt> getListByPage(String pageNumber, int rowsOnPage, List<Receipt> receiptList) {
         List<Receipt> pageReceiptList = new ArrayList<>();
-
         if (pageNumber == null) {
             pageNumber = "1";
         }
         int page = Integer.parseInt(pageNumber);
         int firstIndex = (page - 1) * rowsOnPage;
         int lastIndex = firstIndex + rowsOnPage;
-//        int counter = 0;
         for (int i = firstIndex; i < receiptList.size() && i < lastIndex; i++) {
             pageReceiptList.add(receiptList.get(i));
         }
-        /*for (Receipt receipt : receiptList) {
-            counter++;
-            if (counter > lastIndex) {
-                break;
-            }
-            if (counter > firstIndex) {
-                pageReceiptList.add(receipt);
-            }
-        }*/
         return pageReceiptList;
     }
 }

@@ -28,15 +28,12 @@ public class EncodingFilter implements Filter {
         HttpSession session = request.getSession();
 
         String lang = EN;
-        // если в сесии такой атрибут есть то берем из сесии
         if (session.getAttribute(LANG) != null) {
             lang = (String) session.getAttribute(LANG);
         }
-        // если в реквесте есть параметр то перезаписываем "ланг"
         if (request.getParameter(LANG) != null) {
             lang = request.getParameter(LANG);
         }
-        // по итогу пишем значение переменной
         session.setAttribute(LANG, lang);
 
         logger.info(LANG + " is set " + lang);

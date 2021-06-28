@@ -24,11 +24,7 @@ public interface ManagerDao extends GenericDao<Receipt> {
 
     List<Receipt> getReceiptListByStatus(String status);
 
-    boolean updateUserAddBalance(String userLogin, BigDecimal addBalance);
-
     boolean updateUserAddBalanceTest(String userLogin, BigDecimal oldBalance, BigDecimal addBalance);
-
-    boolean updateReceiptStatusAndReturnMoney(int receiptID, String status);
 
     boolean updateReceiptStatusAndReturnMoney1Method(int receiptID, String status);
 

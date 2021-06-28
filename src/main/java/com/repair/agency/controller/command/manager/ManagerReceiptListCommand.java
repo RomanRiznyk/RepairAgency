@@ -37,9 +37,7 @@ public class ManagerReceiptListCommand implements Command {
         List<String> sortByList = Arrays.asList("ByDate", "ByStatus", "ByPrice");
         List<String> sortByAsc = Arrays.asList("Ascending", "Descending");
         List<String> rowNumbers = Arrays.asList("3", "5", "10");
-
         List<Receipt> receiptList = new ArrayList<>();
-
         String page = request.getParameter("page");
         String rowNumber = request.getParameter("rowNumber");
         System.out.println("ROW NUMBER FROM REQUEST = " + rowNumber);
@@ -55,7 +53,6 @@ public class ManagerReceiptListCommand implements Command {
             }
             System.out.println("ROW NUMBER FROM DEFAULT = " + rowNumber);
         }
-
         if (page == null) {
             if (request.getParameter("receiptListForLang") == null) {
                 if (request.getParameter("sortType") != null) {
@@ -71,13 +68,9 @@ public class ManagerReceiptListCommand implements Command {
             session.removeAttribute("receiptList");
             session.setAttribute("receiptList", receiptList);
         }
-
         receiptList = (List<Receipt>) session.getAttribute("receiptList");
-
         int pages = PaginationUtil.countPages(receiptList.size(), Integer.parseInt(rowNumber));
         List<Receipt> pageReceiptList = PaginationUtil.getListByPage(page, Integer.parseInt(rowNumber), receiptList);
-        /*session.removeAttribute("rowNumber");
-        session.setAttribute("rowNumber", rowNumber);*/
         request.setAttribute("rowNumbers", rowNumbers);
         System.out.println("ROWNUMBERS LIST = " + rowNumbers);
         request.setAttribute("sortBy", sortByList); // todo Builder?  sortByAsc
@@ -86,8 +79,6 @@ public class ManagerReceiptListCommand implements Command {
         request.setAttribute("pageReceiptList", pageReceiptList);
         request.setAttribute("statusList", statusList);
         request.setAttribute("masterList", masterList);
-
-
         logger.info(this.getClass().getSimpleName() + " --> ends");
         return PathConstants.MANAGER_PAGE;
     }

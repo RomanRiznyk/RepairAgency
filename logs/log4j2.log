@@ -71,3 +71,5 @@ Column "mass" not found [42122-200]
 Column "mass" not found [42122-200]
 2021-06-27 22:54:16,298 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Receipt not found
 2021-06-27 23:38:48,522 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Receipt not found
+2021-06-28 10:32:49,471 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Receipt not found
+2021-06-28 10:38:28,227 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Receipt not found

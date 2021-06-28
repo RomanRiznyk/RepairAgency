@@ -93,34 +93,6 @@ public class JdbcManagerDao implements ManagerDao {
         return invoicesList;
     }
 
-   /* @Override
-    public Receipt getInvoiceById(int id) {
-        Receipt receipt = new Receipt();
-        try (Connection con = connection;
-             PreparedStatement prepStmt = con.prepareStatement(SqlConstants.FINED_INVOICE_BY_ID)) {
-            prepStmt.setInt(1, id);
-            prepStmt.setInt(2, id);
-            ResultSet rs = prepStmt.executeQuery();
-
-            String engineer = null;
-            String user = null;
-            while (rs.next()) {
-                if (rs.getString("role").equals("ENGINEER")) {
-                    engineer = rs.getString("login");
-                }
-                if (rs.getString("role").equals("USER")) {
-                    user = rs.getString("login");
-                }
-                receipt = receiptMapper.extractFromResultSet(rs);
-            }
-            receipt.setUser(user);
-            receipt.setEngineer(engineer);
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-        }
-        return receipt;
-    }*/
-
     @Override
     public Receipt getReceiptById(int id) throws DBException {
         Receipt receipt = new Receipt();
@@ -138,12 +110,11 @@ public class JdbcManagerDao implements ManagerDao {
                 receipt.setMasterLogin(rs.getString("mas"));
             }
         } catch (SQLException e) {
-            logger.error(e.getMessage()); // TODO logger and custom Ex
-            throw new DBException("",e);
-        } /*finally {
-            rs.close();  // TODO logger and custom Ex
+            logger.error(e.getMessage());
+            throw new DBException("Cannot get Receipt by ID",e);
+        } finally {
             close(rs);
-        }*/
+        }
         return receipt;
     }
 
@@ -206,67 +177,37 @@ public class JdbcManagerDao implements ManagerDao {
         return receipts;
     }
 
-    @Override
-    public boolean updateUserAddBalance(String userLogin, BigDecimal addBalance) {
-        boolean isSuccessful = false;
-        logger.info("JdbcManagerDao updateUserAddBalance starts ///");
-        try {
-            BigDecimal oldBalance = getUserBalance(userLogin).get();
-            logger.info("Old Balance = " + oldBalance + ". addBalance = " + addBalance);
-            BigDecimal newBalance = addBalance.add(oldBalance);
-            logger.info("New Balance = " + newBalance);
 
-            isSuccessful = updateUserBalanceOnConnection(userLogin, newBalance);
-            BigDecimal newBalanceUpdated = getUserBalance(userLogin).get();
-            logger.info("New Balance Updated in DB= " + newBalanceUpdated);
-
-            logger.info("JdbcManagerDao updateUserAddBalance starts /// 4");
-            connection.commit();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } finally {
-        }
-        return isSuccessful;
-    }
 
     @Override
     public boolean updateUserAddBalanceTest(String userLogin, BigDecimal oldBalance, BigDecimal additionalBalance) {
         boolean isSuccessful = false;
         logger.info("JdbcManagerDao updateUserAddBalance starts");
         try {
-            //BigDecimal oldBalance = getUserBalance(userLogin).get();
-            //logger.info("Old Balance = " + oldBalance + ". addBalance = " + addBalance);
             BigDecimal newBalance = oldBalance.add(additionalBalance);
             logger.info("New Balance = " + newBalance);
-
             isSuccessful = updateUserBalanceOnConnection(userLogin, newBalance);
-            //BigDecimal newBalanceUpdated = getUserBalance(userLogin).get();
-            //logger.info("New Balance Updated in DB= " + newBalanceUpdated);
-
             logger.info("JdbcManagerDao updateUserAddBalance success");
             connection.commit();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
+            close(connection);
         }
         logger.info("JdbcManagerDao updateUserAddBalance ends");
 
         return isSuccessful;
     }
 
-    @Override
+    /*@Override
     public boolean updateReceiptStatusAndReturnMoney(int receiptID, String status) {
         boolean isSuccessful = false;
-        //Connection con = connection;
         try {
             connection.setAutoCommit(false);
             System.out.println("CONNECTION AUTOCOMMIT = " + connection.getAutoCommit());
-        } catch (SQLException ex) {  // todo
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        /*PreparedStatement pstmt = null;
-        ResultSet rs = null;*/
-
         try {
             System.out.println("CONNECTION 1 = " + connection);
             String login = getUserLoginByReceipt(connection, receiptID);
@@ -275,8 +216,8 @@ public class JdbcManagerDao implements ManagerDao {
             System.out.println("CONNECTION 3 = " + connection);
             updateReceiptStatusOnConnection(connection, receiptID, status);
 
-           /* isSuccessful = updateUserAddBalanceOnConnection(con, login, additionalBalance)
-                    && updateReceiptStatusOnConnection(con, receiptID, status);*/
+           *//* isSuccessful = updateUserAddBalanceOnConnection(con, login, additionalBalance)
+                    && updateReceiptStatusOnConnection(con, receiptID, status);*//*
             System.out.println("CONNECTION 4 = " + connection);
             updateUserAddBalanceOnConnection(connection, login, additionalBalance);
 
@@ -299,7 +240,7 @@ public class JdbcManagerDao implements ManagerDao {
             close(connection);
         }
         return isSuccessful;
-    }
+    }*/
 
     @Override
     public boolean updateReceiptStatusAndReturnMoney1Method(int receiptId, String status) {

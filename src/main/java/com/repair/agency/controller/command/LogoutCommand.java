@@ -19,14 +19,12 @@ public class LogoutCommand implements Command {
         ServletContext context = request.getServletContext();
         HttpSession session = request.getSession(false);
 
-        if (session != null) { // todo impossible?
+        if (session != null) {
             HashSet<String> loggedUsers = (HashSet<String>) context.getAttribute("loggedUsers");
             logger.info("LOGGED USERS = " + loggedUsers);
             String login = (String)session.getAttribute("login");
             logger.info("USER LOGIN = " + login);
-            //context.removeAttribute("loggedUsers"); // todo is it necessary?
             loggedUsers.remove(login);
-            //context.setAttribute("loggedUsers", loggedUsers.remove(login)); //todo understand why boolean is here
             session.invalidate();
         }
 

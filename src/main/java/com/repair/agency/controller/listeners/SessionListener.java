@@ -17,6 +17,6 @@ public class SessionListener implements HttpSessionListener {
         String login = (String) session.getAttribute("login");
         loggedUsers.remove(login);
         session.setAttribute("loggedUsers", loggedUsers);
-        session.invalidate(); // todo do I need this here?
+        session.invalidate();
     }
 }

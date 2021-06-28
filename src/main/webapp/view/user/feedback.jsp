@@ -82,10 +82,6 @@
       <input type="submit" value="<fmt:message key='PostFeedback'/>" class="w-25 btn btn-secondary">
     </form>
     <footer>
-      <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2021 Copyright:
-        <a class="text-reset fw-bold">repair-agency.com</a>
-      </div>
     </footer>
   </c:when>
   <c:when test="${!sessionScope.role.equals('USER')}">

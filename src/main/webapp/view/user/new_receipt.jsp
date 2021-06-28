@@ -57,8 +57,6 @@
                     </c:when>
                 </c:choose>
             </div>
-
-
                         <%----------------------- RECEIPTS and MAIN PAGE BUTTONS ---------------------%>
 
             <div class="col-md-3 d-flex justify-content-end">
@@ -73,9 +71,7 @@
                 </form>
             </div>
         </header>
-
         <%--------------- MAIN BODY -------------------%>
-
         <h3><fmt:message key="MakeNewOrder"/></h3>
         <form action="processNewReceipt" method="post">
             <table class="table table-bordered sortable">
@@ -97,7 +93,7 @@
                         </div>
                     </td>
                 </tr>
-            </table
+            </table>
 <br>
             <input type="submit" value="<fmt:message key='Submit'/>" class="btn btn-secondary w-25">
         </form>

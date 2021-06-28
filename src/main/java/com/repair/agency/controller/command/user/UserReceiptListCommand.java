@@ -21,19 +21,12 @@ public class UserReceiptListCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        logger.info(this.getClass().getSimpleName() + " --> starts"); // todo refactor this int logger ValidationUtil methods class
-        String login = (String) request.getSession().getAttribute("login"); // todo all this constants extract into individual Contsant class
-
+        logger.info(this.getClass().getSimpleName() + " --> starts");
+        String login = (String) request.getSession().getAttribute("login");
         request.setAttribute("login", login);
-        request.setAttribute("balance", userService.getBalance(login));  //todo Optional and redirect(?) on error
-        request.setAttribute("receiptList", userService.getReceiptsByLogin(login)); //todo Optional and redirect(?) on error
+        request.setAttribute("balance", userService.getBalance(login));
+        request.setAttribute("receiptList", userService.getReceiptsByLogin(login));
         ValidationUtil.loggingEnds(this, logger);
-        /*if ("processNewReceipt".equals(request.getAttribute("command"))) {
-            System.out.println("REMOVE ATTRIBUTE");
-            request.removeAttribute("command");
-            request.removeAttribute("item");
-            request.removeAttribute("description");
-        }*/
         return PathConstants.USER_PAGE;
     }
 }

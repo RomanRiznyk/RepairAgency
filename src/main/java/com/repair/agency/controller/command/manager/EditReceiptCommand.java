@@ -36,26 +36,20 @@ public class EditReceiptCommand implements Command {
         String masterId = request.getParameter("masterId");
         String price = request.getParameter("price");
         String status = request.getParameter("status");
-        String newBalance = request.getParameter("newBalance");  // todo via minusBalance
+        String newBalance = request.getParameter("newBalance");
         String userLogin = request.getParameter("userLogin");
-
-
         if (request.getParameter("receiptID") == null) {
             return new ErrorPageCommand().execute(request,response);
         }
         int receiptID = Integer.parseInt(request.getParameter("receiptID"));
-
         String additionalBalance = request.getParameter("add balance");
-
-
-        Receipt receipt = managerService.getReceipt(receiptID); // todo Optional
-        BigDecimal balance = userService.findUserByLogin(receipt.getUserLogin()).get().getBalance(); // todo Optional
+        Receipt receipt = managerService.getReceipt(receiptID);
+        BigDecimal balance = userService.getBalance(receipt.getUserLogin());
 
         if (!"".equals(additionalBalance) && additionalBalance != null) {
             String login = receipt.getUserLogin();
             managerService.updateUserAddBalance(login, balance, new BigDecimal(additionalBalance));
         }
-
         if (newBalance != null) {
                 if (userService.updateBalanceByLogin(userLogin, new BigDecimal(newBalance))) {
                     status = "Paid";
@@ -68,29 +62,25 @@ public class EditReceiptCommand implements Command {
         if (price != null) {
             managerService.updateReceiptPrice(price, receiptID);
         }
-        if (status != null) { // todo how to remove double if?
+        if (status != null) {
             if ("Paid".equals(request.getParameter("oldStatus"))) {
                 try {
                     managerService.updateStatusAndReturnMoney(receiptID, status);
                 } catch (DBException ex) {
                     request.setAttribute("errorMessage", ex.getMessage());
                     return new ErrorPageCommand().execute(request,response);
-                    //ex.printStackTrace();
                 }
             }
             try {
-                managerService.updateReceiptStatus(receiptID, status); // todo refactor parameter order
+                managerService.updateReceiptStatus(receiptID, status);
             } catch (DBException ex) {
                 request.setAttribute("errorMessage", ex.getMessage());
                 return new ErrorPageCommand().execute(request,response);
-                //ex.printStackTrace(); // todo
             }
         }
-
-        balance = userService.findUserByLogin(receipt.getUserLogin()).get().getBalance(); // todo unefficient  - just getBalance(login)
+        balance = userService.getBalance(receipt.getUserLogin());
         receipt = managerService.getReceipt(receiptID);
         request.setAttribute("receipt", receipt);
-
         request.setAttribute("balance", balance);
         List<User> masterList = masterService.getAllMasters();
         request.setAttribute("masterList", masterList);

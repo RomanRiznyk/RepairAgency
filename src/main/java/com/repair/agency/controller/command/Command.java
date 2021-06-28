@@ -7,5 +7,5 @@ import java.io.IOException;
 import java.io.Serializable;
 
 public interface Command {
-    String execute(HttpServletRequest request, HttpServletResponse response); // todo do I need response here?
+    String execute(HttpServletRequest request, HttpServletResponse response);
 }

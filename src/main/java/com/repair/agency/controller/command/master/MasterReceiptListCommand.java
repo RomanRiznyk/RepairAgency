@@ -32,19 +32,18 @@ public class MasterReceiptListCommand implements Command {
         String newStatus = request.getParameter("newStatus");
         if (newStatus != null) {
             try {
-                masterService.updateStatus(Integer.parseInt(request.getParameter("receiptId")), newStatus); // todo refactor parameter order
+                masterService.updateStatus(Integer.parseInt(request.getParameter("receiptId")), newStatus);
             } catch (DBException ex) {
                 request.setAttribute("errorMessage", ex.getMessage());
                 logger.debug("Cannot update status", ex); // todo
                 ex.printStackTrace();
                 return new ErrorPageCommand().execute(request,response);
-                //ex.printStackTrace(); // todo
             }
         }
 
         List<Receipt> receiptList = masterService.getReceiptsByMaster(login);
-        int pages = new PaginationUtil().countPages(receiptList.size(), ROWS_ON_PAGE);  // todo DI or static
-        List<Receipt> pageReceiptList = new PaginationUtil().getListByPage(page, ROWS_ON_PAGE, receiptList);
+        int pages = PaginationUtil.countPages(receiptList.size(), ROWS_ON_PAGE);
+        List<Receipt> pageReceiptList = PaginationUtil.getListByPage(page, ROWS_ON_PAGE, receiptList);
         request.setAttribute("pages", pages);
         request.setAttribute("receiptList", pageReceiptList);
         logger.info(this.getClass().getSimpleName() + " --> ends");

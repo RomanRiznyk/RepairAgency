@@ -25,41 +25,33 @@ public class LoginProcessCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response){
-        logger.info(this.getClass().getSimpleName() + " --> starts"); // todo ValidationUtil.loggerStart and Ends
-        HttpSession session = request.getSession();
+        logger.info(this.getClass().getSimpleName() + " --> starts");
         String login = request.getParameter("login");
         String password = request.getParameter("password");
 
-        //todo extract to validation:
-
-        if( login == null || login.equals("") || password == null || password.isEmpty()){ //todo what's better isEmpty or equals("")
+        if( login == null || login.equals("") || password == null || password.isEmpty()){
             ValidationUtil.processInvalidCredentials(request, SHOULD_BE_NOT_NULL);
             ValidationUtil.loggingEnds(this, logger);
             return PathConstants.LOGIN_PAGE;
         }
-
         if(ValidationUtil.checkUserIsLogged(request, login)){
             request.setAttribute("errorMessage", "LoggedOnOtherDevice");
             ValidationUtil.loggingEnds(this, logger);
             return PathConstants.LOGIN_PAGE;
         }
-
         Optional<User> user = userService.findUserByLogin(login); // todo external method .orElse()
         if (!user.isPresent()) {
             ValidationUtil.processInvalidCredentials(request, "\"" +login + "\"" + IS_ABSENT);
             ValidationUtil.loggingEnds(this, logger);
             return PathConstants.LOGIN_PAGE;
         }
-
         if (!password.equals(user.get().getPassword())) {
             ValidationUtil.processInvalidCredentials(request, INVALID_PASSWORD);
             ValidationUtil.loggingEnds(this, logger);
             return PathConstants.LOGIN_PAGE;
         }
-
         ValidationUtil.addUserIntoSessionAndContext(request, logger, user.get());
         ValidationUtil.loggingEnds(this, logger);
-
         switch (user.get().getRole()) {
             case "MANAGER":
                 return "redirect:" + "/manager";

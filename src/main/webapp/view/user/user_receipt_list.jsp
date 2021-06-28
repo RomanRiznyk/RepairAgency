@@ -20,7 +20,6 @@
             display: flex;
             flex-direction: column;
         }
-
         footer {
             margin-top: auto;
         }

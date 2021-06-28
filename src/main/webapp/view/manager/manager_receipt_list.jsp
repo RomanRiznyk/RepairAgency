@@ -93,11 +93,7 @@
         </c:when>
     </c:choose>
     <%----------------------- TABLE HEADER and SORTING BUTTONS ---------------------%>
-    <div class="d-flex flex-wrap justify-content-between py-1 mb-3">
-
-            <div>
-                <h3><fmt:message key='TableOfReceipts'/></h3>
-            </div>
+    <div class="d-flex flex-wrap justify-content-end py-1 mb-3">
         <c:choose>
             <c:when test="${applicationScope.loggedUsers == null}">Logged users == null</c:when>
         </c:choose>
@@ -196,6 +192,12 @@
     </c:choose>
     <%------------------------ PAGINATION------------------------%>
 <%--<div class="d-flex flex-wrap justify-content-between py-1 mb-3">--%>
+    <div class="d-flex flex-wrap justify-content-between py-1 mb-3">
+        <div class="col-md-3 d-flex justify-content-start">
+            <div>
+                <h3><fmt:message key='TableOfReceipts'/></h3>
+            </div>
+        </div>
 
     <div class="d-flex flex justify-content-center">
         <c:forEach var="i" begin="1" end="${pages}">
@@ -226,6 +228,7 @@
                 </c:forEach>
             </div>
         </div>
+    </div>
     </div>
 <%--</div>--%>
    <%-- <div class="d-flex flex justify-content-end">

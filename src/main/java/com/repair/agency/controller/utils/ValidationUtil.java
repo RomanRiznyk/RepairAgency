@@ -26,12 +26,8 @@ public class ValidationUtil {
     }
 
     public static void addUserIntoSessionAndContext(HttpServletRequest request, Logger logger, User user) {
-        //request.getServletContext().setAttribute("userLogin", user.getLogin());
-
-        //ServletContext context = request.getSession().getServletContext();
-        HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext() // todo Optional
-                .getAttribute("loggedUsers");; // todo getSession().getServletContext() on session or on request ???
-
+        HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
+                .getAttribute("loggedUsers");
         boolean isFirstUser = false;
         if(loggedUsers == null){
             loggedUsers = new HashSet<>();
@@ -43,10 +39,10 @@ public class ValidationUtil {
         }
 
         request.getSession().setAttribute(USER, user);
-        request.getSession().setAttribute(ROLE, user.getRole()); // todo without role and login only user entity
-        request.getSession().setAttribute(LOGIN, user.getLogin()); // todo without role and login only user entity
+        request.getSession().setAttribute(ROLE, user.getRole());
+        request.getSession().setAttribute(LOGIN, user.getLogin());
         request.setAttribute(LOGIN, user.getLogin());
-        logger.info(user.getLogin() + LOGGED_SUCCESSFULLY_WITH_ROLE + user.getRole());//Account.Role.valueOf(user.getRole())
+        logger.info(user.getLogin() + LOGGED_SUCCESSFULLY_WITH_ROLE + user.getRole());
     }
 
     public static void loggingEnds(Object obj, Logger logger) {
@@ -55,7 +51,7 @@ public class ValidationUtil {
 
     public static boolean checkUserIsLogged(HttpServletRequest request, String login) {
         HashSet<String> loggedUsers = (HashSet<String>) request.getSession().getServletContext()
-                .getAttribute("loggedUsers"); // todo getSession().getServletContext() on session or on request ???
+                .getAttribute("loggedUsers");
         if(loggedUsers == null){
             loggedUsers = new HashSet<>();
         }
