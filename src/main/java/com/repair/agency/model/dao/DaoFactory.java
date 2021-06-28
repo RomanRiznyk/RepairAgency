@@ -8,7 +8,9 @@ public abstract class DaoFactory {
     private static volatile DaoFactory daoFactory;  // todo via InstanceHolder
 
     public abstract ManagerDao createManagerDao() throws SQLException;
+
     public abstract MasterDao createMasterDao() throws SQLException;
+
     public abstract UserDao createUserDao() throws SQLException;
 
     public static DaoFactory getInstance(){

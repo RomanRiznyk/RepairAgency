@@ -25,7 +25,6 @@ public class JdbcMasterDao implements MasterDao {
         this.connection = connection;
     }
 
-
     @Override
     public List<User> getAllEngineers() {
         List<User> engineers = new ArrayList<>();
@@ -42,7 +41,6 @@ public class JdbcMasterDao implements MasterDao {
         return engineers;
     }
 
-    @Override
     public List<Receipt> getInvoicesByEmail(String engineerEmail) {
         List<Receipt> receiptList = new ArrayList<>();
         try (Connection con = connection;
@@ -57,15 +55,6 @@ public class JdbcMasterDao implements MasterDao {
             logger.error(e.getMessage());
         }
         return receiptList;
-    }
-
-    @Override
-    public void close() throws Exception {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -85,33 +74,31 @@ public class JdbcMasterDao implements MasterDao {
         } catch (SQLException e) {
             logger.error(e.getMessage());
         } finally {
-            //rs.close(); todo Ex handler
+            close(rs);
         }
         return receiptList;
     }
 
     @Override
-    public boolean updateReceiptStatus(int receiptId, String newStatus) throws DBException { //todo how to handle this duplicate code?
+    public boolean updateReceiptStatus(int receiptId, String newStatus) throws DBException {
         boolean isSuccessful = false;
         logger.info("CONNECTION updateReceiptStatus = " + connection);
-        try (/*Connection con = connection;*/
+        try (
                 PreparedStatement prepStmt = connection.prepareStatement(SqlConstants.UPDATE_RECEIPT_STATUS)) {
             if (isFeedbackPresent(receiptId)) {
                 logger.info("FEEDBACK IS PRESENT");
-                throw new DBWasChangedException("User has already added feedback. You can`t change status. Please, refresh the page"); // todo
+                throw new DBWasChangedException("User has already added feedback. You can`t change status. Please, refresh the page");
             }
             prepStmt.setString(1, newStatus);
             prepStmt.setInt(2, receiptId);
             isSuccessful = prepStmt.executeUpdate() > 0;
-            //connection.commit();
-
         } catch (DBWasChangedException e) {
-            logger.error("Cannot update receipt status:" + e.getMessage()); // todo
-            throw new DBException("Cannot update receipt status:" + e.getMessage(), e); // todo
+            logger.error("Cannot update receipt status:" + e.getMessage());
+            throw new DBException("Cannot update receipt status:" + e.getMessage(), e);
         }
         catch (SQLException e) {
-            logger.error("Cannot update receipt status:" + e.getMessage()); // todo
-            throw new DBException(); // todo
+            logger.error("Cannot update receipt status:" + e.getMessage());
+            throw new DBException();
         }
         System.out.println("UPDATE STATUS IS = " + isSuccessful);
         return isSuccessful;
@@ -129,17 +116,36 @@ public class JdbcMasterDao implements MasterDao {
                     isPresent = true;
                 }
                 logger.info("FEEDBACK from RESULTSET = \"" + feedback + "\"");
-
             }
 
         } catch (SQLException ex) {
             logger.error("Cant read Feedback",  ex);
-            ex.printStackTrace(); // todo
+            ex.printStackTrace();
             throw new DBException("Cant read Feedback", ex);
         } finally {
-            //close(rs); //todo
+            close(rs);
         }
         logger.info("Feedback is present = " + isPresent);
         return isPresent;
+    }
+
+    @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            logger.error(e.getMessage());
+        }
+    }
+
+    private void close(AutoCloseable ac){
+        if (ac != null) {
+            try {
+                ac.close();
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+                e.printStackTrace();
+            }
+        }
     }
 }

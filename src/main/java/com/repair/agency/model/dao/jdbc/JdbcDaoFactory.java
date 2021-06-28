@@ -38,6 +38,4 @@ public class JdbcDaoFactory extends DaoFactory {
     public UserDao createUserDao() throws SQLException {
         return new JdbcUserDao(getConnection());
     }
-
-
 }

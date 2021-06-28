@@ -1,7 +1,7 @@
 package com.repair.agency;
 
 public class PathConstants {
-    public static final String ERROR_PAGE = "/view/error.jsp";  // todo format like PAGE__LOGIN
+    public static final String ERROR_PAGE = "/view/error.jsp";
     public static final String LOGIN_PAGE = "/view/login.jsp";
     public static final String REGISTER_PAGE = "/view/register.jsp";
     public static final String MANAGER_PAGE = "/view/manager/manager_receipt_list.jsp";

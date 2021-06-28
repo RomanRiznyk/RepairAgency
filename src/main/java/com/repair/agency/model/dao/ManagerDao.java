@@ -18,10 +18,6 @@ public interface ManagerDao extends GenericDao<Receipt> {
 
     Receipt getReceiptById(int id) throws SQLException;
 
-    List<User> getAllUsers();
-
-    boolean setUserBalance(String userId, String newBalance);
-
     List<Receipt> getReceiptListByStatus(String status);
 
     boolean updateUserAddBalanceTest(String userLogin, BigDecimal oldBalance, BigDecimal addBalance);

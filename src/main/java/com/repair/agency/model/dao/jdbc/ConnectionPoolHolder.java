@@ -16,14 +16,12 @@ public class ConnectionPoolHolder {
                 if (dataSource == null) {
                     BasicDataSource ds = new BasicDataSource();
                     ds.setUrl(JDBC_URL);
-                    //ds.setDefaultAutoCommit(false);
                     ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
                     ds.setUsername(JDBC_USERNAME);
                     ds.setPassword(JDBC_PASSWORD);
                     ds.setMinIdle(5);
                     ds.setMaxIdle(10);
                     ds.setMaxOpenPreparedStatements(100);
-                    //ds.//allowPublicKeyRetrieval=true
                     dataSource = ds;
                 }
             }

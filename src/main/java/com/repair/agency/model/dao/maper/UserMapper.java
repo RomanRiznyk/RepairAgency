@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class UserMapper implements ObjectMapper<User>{
     @Override
-    public User extractFromResultSet(ResultSet rs) throws SQLException { //todo handle Ex
+    public User extractFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getInt("id"));
         user.setLogin(rs.getString("login"));

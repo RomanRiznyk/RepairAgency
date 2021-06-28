@@ -19,30 +19,9 @@ public class JdbcUserDao implements UserDao {
     private static final Logger logger = LogManager.getLogger(JdbcUserDao.class.getName());
     private final Connection connection;
     ReceiptMapper receiptMapper = new ReceiptMapper();
-    UserMapper userMapper = new UserMapper();
 
     public JdbcUserDao(Connection connection) {
         this.connection = connection;
-    }
-
-    @Override
-    public User getUserByLoginPassword(String email, String password) {
-        ResultSet rs = null;
-        User user = new User();
-        try (Connection con = connection;
-             PreparedStatement prepStmt = con.prepareStatement(SqlConstants.GET_USER)) {
-            prepStmt.setString(1, email);
-            prepStmt.setString(2, password);
-            rs = prepStmt.executeQuery();
-            while (rs.next()) {
-                user = userMapper.extractFromResultSet(rs);
-            }
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-        } finally {
-            close(rs);
-        }
-        return user;
     }
 
     @Override
@@ -64,7 +43,6 @@ public class JdbcUserDao implements UserDao {
         return Optional.empty();
     }
 
-    @Override
     public boolean insertUser(String email, String login, String password) {
         if (email == null || login == null || password == null) {
             return false;
@@ -80,35 +58,6 @@ public class JdbcUserDao implements UserDao {
             logger.error(e.getMessage());
         }
         return isSuccess;
-    }
-
-    @Override
-    public List<Receipt> getReceiptsByUserEmail(String email) {
-        Connection con = connection;
-        ResultSet rs = null;
-        List<Receipt> userInvoicesList = new ArrayList<>();
-        try (PreparedStatement prepStmt = con.prepareStatement(SqlConstants.SELECT_INVOICES_BY_EMAIL)) {
-            con.setAutoCommit(false);
-            prepStmt.setString(1, email);
-            rs = prepStmt.executeQuery();
-            while (rs.next()) {
-                Receipt receipt = receiptMapper.extractFromResultSet(rs);
-                receipt.setMasterLogin(getMasterById(receipt.getMaster_id()));
-                userInvoicesList.add(receipt);
-            }
-            con.commit();
-        } catch (SQLException e) {
-            try {
-                con.rollback();
-            } catch (SQLException ex) {
-                logger.error(ex.getMessage());
-            }
-            logger.error(e.getMessage());
-        } finally {
-            close(rs);
-            close(con);
-        }
-        return userInvoicesList;
     }
 
     @Override
@@ -136,14 +85,13 @@ public class JdbcUserDao implements UserDao {
              PreparedStatement prepStmt = con.prepareStatement(SqlConstants.INSERT_NEW_RECEIPT_WITH_MASTER)) {
             prepStmt.setString(1, login);
             prepStmt.setString(2, item);
-            prepStmt.setString(3, description); // todo handle if descr is null???
+            prepStmt.setString(3, description);
             prepStmt.setString(4, masterLogin);
             isSuccess = prepStmt.executeUpdate() > 0;
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
         return isSuccess;
-
     }
 
     @Override
@@ -172,10 +120,8 @@ public class JdbcUserDao implements UserDao {
         } catch (SQLException e) {
             logger.error(e.getMessage());
         }
-
         return Optional.empty();
     }
-
 
     private String getMasterById(int id) throws SQLException { //  todo rename  ex handle
         String name = "";
@@ -190,7 +136,6 @@ public class JdbcUserDao implements UserDao {
         } finally {
             close(rs);
         }
-
         return name;
     }
 
@@ -223,25 +168,6 @@ public class JdbcUserDao implements UserDao {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        ResultSet rs = null;
-        User user = new User();
-        try (Connection con = connection;
-             PreparedStatement prepStmt = con.prepareStatement(SqlConstants.GET_USER_BY_EMAIL)) {
-            prepStmt.setString(1, email);
-            rs = prepStmt.executeQuery();
-            while (rs.next()) {
-                user = userMapper.extractFromResultSet(rs);
-            }
-        } catch (SQLException e) {
-            logger.error(e.getMessage());
-        } finally {
-            close(rs);
-        }
-        return user;
-    }
-
-    @Override
     public BigDecimal getBalance(String login) {
         BigDecimal balance = null;
         ResultSet rs = null;
@@ -252,24 +178,13 @@ public class JdbcUserDao implements UserDao {
             while (rs.next()) {
                 balance = rs.getBigDecimal("balance");
             }
-
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
             close(rs);
-            //close(connection);
+            close(connection);
         }
-
         return balance;
-    }
-
-    @Override
-    public void close() {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -289,30 +204,18 @@ public class JdbcUserDao implements UserDao {
         } catch (SQLException e) {
             logger.error(e.getMessage());
         } finally {
-            //rs.close(); todo Ex handler
+            close(rs);
         }
         return receiptList;
     }
 
-
-
-    public Optional<BigDecimal> getUserBalance(String login) {
-        Optional<BigDecimal> balance = Optional.empty();
-        ResultSet rs = null;
-        try(Connection con = connection;
-            PreparedStatement pstmt = con.prepareStatement(SqlConstants.GET_USER_BALANCE_BY_LOGIN);
-        ) {
-            pstmt.setString(1, login);
-             rs = pstmt.executeQuery();
-             while (rs.next()){
-                 balance = Optional.of(rs.getBigDecimal("balance"));
-             }
-        } catch (SQLException ex) {
-            ex.printStackTrace(); // todo ex
-        } finally {
-            close(rs);
+    @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-        return balance;
     }
 
     private void close(AutoCloseable ac) { // todo duplicate close?

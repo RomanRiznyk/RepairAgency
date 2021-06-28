@@ -7,22 +7,14 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDao extends GenericDao {
-    User getUserByLoginPassword(String email, String password);
-
+public interface UserDao extends GenericDao<User> {
     Optional<User> getUserByLogin(String login);
-
-    boolean insertUser(String email, String login, String password);
-
-    List<Receipt> getReceiptsByUserEmail(String email);
 
     boolean createReceipt(String login, String item, String description);
 
     boolean addFeedback(int id, String feedback);
 
     boolean updateUserBalance(String invoiceUser, BigDecimal price);
-
-    User getUserByEmail(String email);
 
     BigDecimal getBalance(String login);
 

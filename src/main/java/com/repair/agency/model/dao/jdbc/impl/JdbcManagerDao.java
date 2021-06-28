@@ -118,7 +118,6 @@ public class JdbcManagerDao implements ManagerDao {
         return receipt;
     }
 
-    @Override
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>();
         try (Connection con = connection;
@@ -138,7 +137,6 @@ public class JdbcManagerDao implements ManagerDao {
         return userList;
     }
 
-    @Override
     public boolean setUserBalance(String userId, String newBalance) {
         boolean isSuccessful = false;
 
@@ -177,8 +175,6 @@ public class JdbcManagerDao implements ManagerDao {
         return receipts;
     }
 
-
-
     @Override
     public boolean updateUserAddBalanceTest(String userLogin, BigDecimal oldBalance, BigDecimal additionalBalance) {
         boolean isSuccessful = false;
@@ -199,49 +195,6 @@ public class JdbcManagerDao implements ManagerDao {
         return isSuccessful;
     }
 
-    /*@Override
-    public boolean updateReceiptStatusAndReturnMoney(int receiptID, String status) {
-        boolean isSuccessful = false;
-        try {
-            connection.setAutoCommit(false);
-            System.out.println("CONNECTION AUTOCOMMIT = " + connection.getAutoCommit());
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        try {
-            System.out.println("CONNECTION 1 = " + connection);
-            String login = getUserLoginByReceipt(connection, receiptID);
-            System.out.println("CONNECTION 2 = " + connection);
-            BigDecimal additionalBalance = getPrice(connection, receiptID);
-            System.out.println("CONNECTION 3 = " + connection);
-            updateReceiptStatusOnConnection(connection, receiptID, status);
-
-           *//* isSuccessful = updateUserAddBalanceOnConnection(con, login, additionalBalance)
-                    && updateReceiptStatusOnConnection(con, receiptID, status);*//*
-            System.out.println("CONNECTION 4 = " + connection);
-            updateUserAddBalanceOnConnection(connection, login, additionalBalance);
-
-            System.out.println("CONNECTION 5 = " + connection);
-
-            //System.out.println("BEFORE COMMIT isSuccessful = " + isSuccessful);
-            connection.commit();
-            isSuccessful = true;
-        } catch (SQLException ex) {
-            try {
-                System.out.println("updateReceiptStatusAndReturnMoney => ROLLBACK");
-                connection.rollback(); // todo
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            ex.printStackTrace();
-        } finally {
-            //(rs);
-            //close(pstmt);
-            close(connection);
-        }
-        return isSuccessful;
-    }*/
-
     @Override
     public boolean updateReceiptStatusAndReturnMoney1Method(int receiptId, String status) {
         boolean isSuccessful = false;
@@ -253,7 +206,6 @@ public class JdbcManagerDao implements ManagerDao {
         }
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-
         try {
             String login = "";
             pstmt = connection.prepareStatement(SqlConstants.GET_USER_LOGIN_BY_RECEIPT_ID);
@@ -281,7 +233,6 @@ public class JdbcManagerDao implements ManagerDao {
             pstmt.setString(1, status);
             pstmt.setInt(2, receiptId);
             pstmt.executeUpdate();
-
             connection.commit();
             isSuccessful = true;
         } catch (SQLException ex) {
@@ -294,8 +245,8 @@ public class JdbcManagerDao implements ManagerDao {
             }
             ex.printStackTrace();
         } finally {
-            //(rs);
-            //close(pstmt);
+            close(rs);
+            close(pstmt);
             close(connection);
         }
         return isSuccessful;
@@ -307,7 +258,6 @@ public class JdbcManagerDao implements ManagerDao {
         ResultSet rs = null;
         try (Connection con = connection;
              PreparedStatement pstmt = con.prepareStatement(SqlConstants.SELECT_ALL_RECEIPTS_WITH_MASTER_USER_LOGINS_BY_DATE + ascType)) {
-            //pstmt.setString(1, ascType);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Receipt receipt = receiptMapper.extractFromResultSet(rs);
@@ -329,7 +279,6 @@ public class JdbcManagerDao implements ManagerDao {
         ResultSet rs = null;
         try (Connection con = connection;
              PreparedStatement pstmt = con.prepareStatement(SqlConstants.SELECT_ALL_RECEIPTS_WITH_MASTER_USER_LOGINS_BY_STATUS + ascType)) {
-            //pstmt.setString(1, ascType);
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 Receipt receipt = receiptMapper.extractFromResultSet(rs);
@@ -382,38 +331,7 @@ public class JdbcManagerDao implements ManagerDao {
         return isAbsent;
     }
 
-        private BigDecimal getPrice(Connection con, int receiptID) {
-        BigDecimal price = null; // todo via Optional
-        ResultSet rs = null;
-        try (PreparedStatement pstmt = con.prepareStatement(SqlConstants.GET_RECEIPT_PRICE_BY_ID)){
-            pstmt.setInt(1, receiptID);
-            rs = pstmt.executeQuery();
-            while (rs.next()){
-                price = rs.getBigDecimal("price");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace(); // todo ex handl
-        }
-        return price;
-    }
-
-    private String getUserLoginByReceipt(Connection con, int receiptID) {
-        String login = null; // todo via Optional
-        ResultSet rs = null;
-        try (PreparedStatement pstmt = con.prepareStatement(SqlConstants.GET_USER_LOGIN_BY_RECEIPT_ID)) {
-            pstmt.setInt(1, receiptID);
-            rs = pstmt.executeQuery();
-            while (rs.next()){
-                login = rs.getString("login");
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        return login;
-    }
-
-
-    public boolean updateUserBalanceOnConnection(String login, BigDecimal newBalance) {  // todo do i need this WithConnection methods if yes - the reuse them in w\o connection method - delegate
+    public boolean updateUserBalanceOnConnection(String login, BigDecimal newBalance) {
         boolean result = false;
         try {
             connection.setAutoCommit(false);
@@ -448,58 +366,7 @@ public class JdbcManagerDao implements ManagerDao {
         } finally {
             close(rs);
         }
-
         return balance;
-    }
-
-    @Override
-    public void close() throws Exception {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e); // todo Ex handler
-        }
-    }
-
-    private void close(AutoCloseable ac){
-        if (ac != null) {
-            try {
-                ac.close();
-            } catch (Exception e) {
-                e.printStackTrace(); // todo ex
-            }
-        }
-    }
-
-    public List getReceiptsByLogin(String login) {
-        return null; // todo what I have to do with it if dont need it
-    }
-
-    public boolean updateUserAddBalanceOnConnection(Connection con, String userLogin, BigDecimal addBalance) {
-        boolean isSuccessful;
-        logger.info("JdbcManagerDao updateUserAddBalance starts ///");
-        try {
-            connection.setAutoCommit(false);
-            System.out.println("CONNECTION AUTOCOMMIT = " + connection.getAutoCommit());
-        } catch (SQLException ex) {  // todo
-            ex.printStackTrace();
-        }
-        try {
-            BigDecimal oldBalance = getUserBalanceWithConnection(con, userLogin).get();
-            logger.info("Old Balance = " + oldBalance + ". addBalance = " + addBalance);
-            BigDecimal newBalance = addBalance.add(oldBalance);
-            logger.info("New Balance = " + newBalance);
-
-            isSuccessful = updateUserBalanceOnConnection(con, userLogin, newBalance);
-            BigDecimal newBalanceUpdated = getUserBalance(userLogin).get();
-            logger.info("New Balance Updated in DB= " + newBalanceUpdated);
-
-            logger.info("JdbcManagerDao updateUserAddBalance starts /// 4");
-            //con.commit();
-        } finally {
-        }
-        System.out.println("UPDATE BALANCE IS = " + isSuccessful);
-        return isSuccessful;
     }
 
     private Optional<BigDecimal> getUserBalanceWithConnection(Connection con, String login) {
@@ -523,9 +390,7 @@ public class JdbcManagerDao implements ManagerDao {
         } finally {
             close(rs);
         }
-
         return balance;
-
     }
 
     public boolean updateUserBalanceOnConnection(Connection con, String login, BigDecimal newBalance) {
@@ -546,32 +411,22 @@ public class JdbcManagerDao implements ManagerDao {
         return result;
     }
 
-    public boolean updateReceiptStatusOnConnection(Connection con, int invoiceId, String status) {
-        boolean isSuccessful = false;
-
+    @Override
+    public void close() {
         try {
-            con.setAutoCommit(false);
-            System.out.println("CONNECTION AUTOCOMMIT = " + con.getAutoCommit());
-        } catch (SQLException ex) {  // todo
-            ex.printStackTrace();
-        }
-        System.out.println("CONNECTION updateReceiptStatusOnConnection = " + con);
-        try (PreparedStatement prepStmt = con.prepareStatement(SqlConstants.UPDATE_RECEIPT_STATUS)) {
-            System.out.println("PSTMT = " + prepStmt);
-            prepStmt.setString(1, status);
-            System.out.println("PSTMT = " + prepStmt);
-            prepStmt.setInt(2, invoiceId);
-            System.out.println("PSTMT = " + prepStmt);
-            int updateCounter = prepStmt.executeUpdate();
-            System.out.println("updateCounter => " + updateCounter);
-
-            isSuccessful = updateCounter > 0;
-            //updateReceiptStatusOnConnection
+            connection.close();
         } catch (SQLException e) {
-            logger.error(e.getMessage());
+            throw new RuntimeException(e); // todo Ex handler
         }
-        System.out.println("UPDATE STATUS IS = " + isSuccessful);
-        return isSuccessful;
     }
 
+    private void close(AutoCloseable ac){
+        if (ac != null) {
+            try {
+                ac.close();
+            } catch (Exception e) {
+                e.printStackTrace(); // todo ex
+            }
+        }
+    }
 }

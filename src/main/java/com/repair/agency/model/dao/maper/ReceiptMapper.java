@@ -14,8 +14,8 @@ public class ReceiptMapper implements ObjectMapper<Receipt>{
         receipt.setDescription(rs.getString("description"));
         receipt.setPrice(rs.getBigDecimal("price"));
         receipt.setFeedback(rs.getString("feedback"));
-        receipt.setUser_id(rs.getInt("user_id"));  // todo rename userId
-        receipt.setMaster_id(rs.getInt("master_id")); // todo rename masterId
+        receipt.setUser_id(rs.getInt("user_id"));
+        receipt.setMaster_id(rs.getInt("master_id"));
         receipt.setStatus(rs.getString("status"));
         receipt.setCreateDate(rs.getString("create_time"));
         return receipt;
