@@ -2,8 +2,8 @@ package com.repair.agency.controller.command.user;
 
 import com.repair.agency.PathConstants;
 import com.repair.agency.controller.command.Command;
-import com.repair.agency.controller.command.Util;
 import com.repair.agency.controller.command.manager.EditReceiptCommand;
+import com.repair.agency.controller.utils.ValidationUtil;
 import com.repair.agency.model.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,10 +31,10 @@ public class AddFeedbackCommand implements Command {
         }
         if (!userService.addFeedback(Integer.parseInt(id), feedback)) {
             logger.info("Error in add feedback");
-            Util.loggingEnds(this, logger);
+            ValidationUtil.loggingEnds(this, logger);
             return PathConstants.ERROR_PAGE;  // todo exHandler
         }
-        Util.loggingEnds(this, logger);
+        ValidationUtil.loggingEnds(this, logger);
         return "redirect:" + "/user";
     }
 }

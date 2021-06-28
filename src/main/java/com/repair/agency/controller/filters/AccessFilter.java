@@ -26,13 +26,13 @@ public class AccessFilter implements Filter {
     HttpServletResponse httpResp;
 
 
-    @Override
-    public void init(FilterConfig config) throws ServletException {
+/*    @Override
+    public void init(FilterConfig config) {
     }
 
     @Override
     public void destroy() {
-    }
+    }*/
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
@@ -41,23 +41,14 @@ public class AccessFilter implements Filter {
         httpResp = (HttpServletResponse) response;
         HttpSession session = httpReq.getSession();
         String path = httpReq.getRequestURI();
-        //User user = (User) session.getAttribute("user");
         String role = (String) session.getAttribute("role");
-
-        //if ("/login".)
-
-        //System.out.println("PATH = " + path);
-        if (role == null && (path.contains("/manager") || path.contains("/user") || path.contains("/master"))) {
+        if (role == null && (path.contains("/manager") || path.contains("/user") || path.contains("/master") || path.contains("/logout"))) {
             httpReq.setAttribute("access", "NotLoggedIn");
             String forward = new LoginPageCommand().execute(httpReq, httpResp);
-            //httpReq.getRequestDispatcher(forward).forward(request, response);
             logger.info("Forward in Access filter = " + forward);
             String loginPath = httpReq.getContextPath() + forward/*.replace(".jsp", "")*/;
             httpReq.setAttribute("action", loginPath);
             httpReq.getRequestDispatcher(forward).forward(httpReq,httpResp);
-            //httpResp.sendRedirect(loginPath); // todo why not redirected to forward URL?
-            //System.out.println();
-            //chain.doFilter(request, response);
             return;
         }
 

@@ -19,12 +19,12 @@ public class CommandContainer {
         commands.put("/logout", new LogoutCommand());
         commands.put("/login", new LoginPageCommand());
         commands.put("/register", new RegisterPageCommand());
-        commands.put("/account", new ValidationCommand(new UserService()));
-        commands.put("/user/account", new ValidationCommand(new UserService()));
-        commands.put("/manager/account", new ValidationCommand(new UserService()));
-        //commands.put("/view/account", new ValidationCommand(new UserService()));
-        commands.put("/master/account", new ValidationCommand(new UserService()));
-        commands.put("/processRegister", new ProcessRegistrationCommand(new UserService()));
+        commands.put("/account", new LoginProcessCommand(new UserService()));
+        commands.put("/user/account", new LoginProcessCommand(new UserService()));
+        commands.put("/manager/account", new LoginProcessCommand(new UserService()));
+        commands.put("/view/account", new LoginProcessCommand(new UserService()));
+        commands.put("/master/account", new LoginProcessCommand(new UserService()));
+        commands.put("/processRegister", new RegistrationProcessCommand(new UserService()));
         commands.put("/manager/editReceipt", new EditReceiptCommand(new ManagerService(), new UserService(), new MasterService()));
         commands.put("/manager", new ManagerReceiptListCommand(new MasterService(), new ManagerService()));
         commands.put("/master", new MasterReceiptListCommand(new MasterService()));

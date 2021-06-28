@@ -2,8 +2,8 @@ package com.repair.agency.controller;
 
 import com.repair.agency.controller.command.Command;
 import com.repair.agency.controller.command.CommandContainer;
-import com.repair.agency.controller.command.Util;
 import com.repair.agency.controller.command.manager.EditReceiptCommand;
+import com.repair.agency.controller.utils.ValidationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -49,7 +49,7 @@ public class ServletController extends HttpServlet {
         }else {
             request.getRequestDispatcher(forward).forward(request, response);
         }
-        Util.loggingEnds(this, logger);
+        ValidationUtil.loggingEnds(this, logger);
     }
 
 }

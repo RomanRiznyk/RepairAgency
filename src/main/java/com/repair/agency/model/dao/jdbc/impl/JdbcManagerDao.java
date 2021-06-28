@@ -122,20 +122,24 @@ public class JdbcManagerDao implements ManagerDao {
     }*/
 
     @Override
-    public Receipt getReceiptById(int id) /*throws SQLException*/ {
+    public Receipt getReceiptById(int id) throws DBException {
         Receipt receipt = new Receipt();
         ResultSet rs = null;
         try (Connection con = connection;
              PreparedStatement prepStmt = con.prepareStatement(SqlConstants.FIND_RECEIPT_BY_ID_WITH_USER_MASTER_LOGINS)) {
             prepStmt.setInt(1, id);
             rs = prepStmt.executeQuery();
+            if (!rs.isBeforeFirst()) {
+                throw new DBException("Receipt not found", null);
+            }
             while (rs.next()) {
                 receipt = receiptMapper.extractFromResultSet(rs);
-                receipt.setUserLogin(rs.getString("customer.login"));
-                receipt.setMasterLogin(rs.getString("masters.login"));
+                receipt.setUserLogin(rs.getString("cut"));
+                receipt.setMasterLogin(rs.getString("mas"));
             }
         } catch (SQLException e) {
             logger.error(e.getMessage()); // TODO logger and custom Ex
+            throw new DBException("",e);
         } /*finally {
             rs.close();  // TODO logger and custom Ex
             close(rs);
@@ -154,7 +158,7 @@ public class JdbcManagerDao implements ManagerDao {
                 user.setLogin(rs.getString("login"));
                 user.setId(rs.getInt("id"));
                 user.setRole(rs.getString("role"));
-                user.setBalance(rs.getBigDecimal("wallet"));
+                user.setBalance(rs.getBigDecimal("balance"));
                 userList.add(user);
             }
         } catch (SQLException e) {

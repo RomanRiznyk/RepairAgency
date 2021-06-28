@@ -26,8 +26,8 @@ public class ManagerDaoTest {
     @BeforeClass
     public static void dbCreate() throws SQLException, FileNotFoundException {
         DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-        String mysqlUrl = "jdbc:mysql://localhost:3306?serverTimezone=EET";
-        Connection con = DriverManager.getConnection(mysqlUrl, "root", "root");
+        String mysqlUrl = "jdbc:mysql://localhost:3306/repair?allowPublicKeyRetrieval=true&useSSL=false&?serverTimezone=EET";
+        Connection con = DriverManager.getConnection(mysqlUrl, "root", "123456");
         ScriptRunner sr = new ScriptRunner(con);
         Reader reader = new BufferedReader(new FileReader("src/main/resources/db-test.sql"));
         sr.runScript(reader);
@@ -35,7 +35,7 @@ public class ManagerDaoTest {
 
     @Before
     public void jdbcCreate() throws SQLException {
-        con = DBConnector.getDataSource().getConnection();
+        con = DBConnector.getDataSourceMSQL().getConnection();
         adminDao = new JdbcManagerDao(con);
     }
 

@@ -148,7 +148,7 @@
         </table>
         <footer>
     <%-------------------------------- PAGINATION -----------------------%>
-            <div class="d-flex flex-row justify-content-center">
+            <%--<div class="d-flex flex-row justify-content-center">
                 <c:forEach var="i" begin="1" end="${pages}">
                     <c:choose>
                         <c:when test="${pages != 1}">
@@ -159,11 +159,7 @@
                         </c:when>
                     </c:choose>
                 </c:forEach>
-            </div>
-            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                © 2021 Copyright:
-                <a class="text-reset fw-bold">repair-agency.com</a>
-            </div>
+            </div>--%>
         </footer>
     </c:when>
     <c:when test="${!sessionScope.role.equals('MASTER')}">

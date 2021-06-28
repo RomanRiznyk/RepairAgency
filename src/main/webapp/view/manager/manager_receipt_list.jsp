@@ -81,7 +81,7 @@
             </div>
 </header>
     <%--------------- MAIN BODY -------------------%>
-    <h3 class="fw-normal"><fmt:message key='Hello'/> <span style='color: blue;'>${sessionScope.login}</span>! </h3>
+    <h3 class="fw-normal"><fmt:message key='Hello'/> <span style='color: green;'>${sessionScope.login}</span>! </h3>
         <%--------------- ERRORS MESSAGES -------------------%>
         <br>
     <c:choose>
@@ -188,14 +188,58 @@
                 </div>
             </div>
     </div>
-
+    <%------------------------ RECEIPTS MESSAGE------------------------%>
     <c:choose>
         <c:when test="${sessionScope.receiptList.size() == 0}">
             <h5><fmt:message key='YouHaveNoReceipts'/></h5>
         </c:when>
-    </c:choose>  <%--NO RECEIPTS MESSAGE--%>
+    </c:choose>
+    <%------------------------ PAGINATION------------------------%>
+<%--<div class="d-flex flex-wrap justify-content-between py-1 mb-3">--%>
 
+    <div class="d-flex flex justify-content-center">
+        <c:forEach var="i" begin="1" end="${pages}">
+            <c:choose>
+                <c:when test="${pages != 1}">
+                    <form action="manager" method="get">
+                        <input type="hidden" name="page" value="${i}">
+                        <%--<input type="hidden" name="rowNumber" value="${rowNumber}">--%>
+                        <input type="submit" class="btn btn-outline-secondary mx-1" value="${i}">
+                    </form>
+                </c:when>
+            </c:choose>
+        </c:forEach>
+    </div>
+
+    <div class="d-flex flex justify-content-end">
+        <div class="dropdown mx-1">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <fmt:message key="ReceiptsOnPage"/>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <c:forEach var="rowNumber" items="${rowNumbers}">
+                    <form action="manager" method="post">
+                        <input type="hidden" name="rowNumber" value="${rowNumber}">
+                        <input class="dropdown-item" type="submit" value="${rowNumber}">
+                    </form>
+                </c:forEach>
+            </div>
+        </div>
+    </div>
+<%--</div>--%>
+   <%-- <div class="d-flex flex justify-content-end">
+        <div class="dropdown-menu" aria-labelledby="dropdownStatusButton">
+            <c:forEach var="rowNumber" items="${sessionScope.rowNumbers}">
+                <form action="manager" method="post">
+                    <input type="hidden" name="rowNumber" value="${rowNumber}">
+                    <input class="dropdown-item" type="submit" name="rowNumber" value="${rowNumber}">
+                </form>
+            </c:forEach>
+        </div>
+    </div>--%>
     <%----------------------- TABLE of RECEIPTS ---------------------%>
+    <br>
     <table class="table table-bordered sortable">
         <thead>
             <tr>
@@ -215,7 +259,7 @@
 
         <tbody>
         <%--<tr>--%>
-            <c:forEach var="receipt" items="${sessionScope.receiptList}">
+            <c:forEach var="receipt" items="${pageReceiptList}">
                 <tr>
                     <td class="title">${receipt.id}</td>
                     <td class="title">${receipt.item}
@@ -266,10 +310,7 @@
         </tbody>
     </table>
             <footer>
-                <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                    © :
-                    <a class="text-reset fw-bold">RepairAgency</a>
-                </div>
+
             </footer>
             </c:when>
             <c:when test="${!sessionScope.role.equals('MANAGER')}">

@@ -41,3 +41,33 @@
 2021-06-07 18:17:10,268 ERROR c.r.a.m.d.j.JdbcUserDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
 2021-06-07 19:01:17,974 ERROR c.r.a.m.d.j.JdbcAdminDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
 2021-06-07 19:02:42,023 ERROR c.r.a.m.d.j.JdbcAdminDao [main] Cannot add or update a child row: a foreign key constraint fails (`repair`.`receipt`, CONSTRAINT `fk_invoice_user1` FOREIGN KEY (`engineer_id`) REFERENCES `user` (`id`))
+2021-06-27 21:26:33,578 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Unknown column 'master_id' in 'IN/ALL/ANY subquery'
+2021-06-27 21:26:33,889 ERROR c.r.a.m.d.j.i.JdbcUserDao [main] Column 'id' not found.
+2021-06-27 21:26:33,897 ERROR c.r.a.m.d.j.i.JdbcUserDao [main] Column 'balance' not found.
+2021-06-27 21:26:33,906 ERROR c.r.a.m.d.j.i.JdbcUserDao [main] Unknown column 'balance' in 'field list'
+2021-06-27 21:26:33,916 ERROR c.r.a.m.d.j.i.JdbcUserDao [main] Column 'balance' not found.
+2021-06-27 21:26:33,924 ERROR c.r.a.m.d.j.i.JdbcUserDao [main] Parameter index out of range (3 > number of parameters, which is 2).
+2021-06-27 21:26:33,932 ERROR c.r.a.m.d.j.i.JdbcUserDao [main] Unknown column 'id' in 'where clause'
+2021-06-27 22:04:38,357 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Столбец "wallet" не найден
+Column "wallet" not found [42122-200]
+2021-06-27 22:05:58,476 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Столбец "wallet" не найден
+Column "wallet" not found [42122-200]
+2021-06-27 22:12:56,518 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Объект уже закрыт
+The object is already closed [90007-200]
+2021-06-27 22:14:00,580 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Объект уже закрыт
+The object is already closed [90007-200]
+2021-06-27 22:26:34,182 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Столбец "customer.login" не найден
+Column "customer.login" not found [42122-200]
+2021-06-27 22:29:18,581 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Столбец "customer.login" не найден
+Column "customer.login" not found [42122-200]
+2021-06-27 22:29:40,498 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Connection is null.
+2021-06-27 22:37:21,912 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Столбец "customer.login" не найден
+Column "customer.login" not found [42122-200]
+2021-06-27 22:39:22,263 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Столбец "customer.login" не найден
+Column "customer.login" not found [42122-200]
+2021-06-27 22:42:08,042 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Столбец "mass" не найден
+Column "mass" not found [42122-200]
+2021-06-27 22:46:06,343 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Столбец "mass" не найден
+Column "mass" not found [42122-200]
+2021-06-27 22:54:16,298 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Receipt not found
+2021-06-27 23:38:48,522 ERROR c.r.a.m.d.j.i.JdbcManagerDao [main] Receipt not found

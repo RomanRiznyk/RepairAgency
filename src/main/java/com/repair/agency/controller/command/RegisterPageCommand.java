@@ -15,7 +15,6 @@ public class RegisterPageCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response){
         logger.info(this.getClass().getSimpleName() + " --> starts");
         logger.info(this.getClass().getSimpleName() + " --> ends");
-
         return PathConstants.REGISTER_PAGE;
     }
 }

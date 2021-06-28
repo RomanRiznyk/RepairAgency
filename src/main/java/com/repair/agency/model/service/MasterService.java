@@ -17,25 +17,14 @@ public class MasterService {
     DaoFactory daoFactory = DaoFactory.getInstance();
     private static final Logger logger = LogManager.getLogger(JdbcManagerDao.class.getName());
 
-
-    public List<User> getAllMasters() {  // todo refactor rename
-        List<User> engineers = new ArrayList<>();
+    public List<User> getAllMasters() {
+        List<User> masters = new ArrayList<>();
         try (MasterDao masterDao = daoFactory.createMasterDao()) {
-            engineers = masterDao.getAllEngineers();
+            masters = masterDao.getAllEngineers();
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return engineers;
-    }
-
-    public List<Receipt> getInvoicesByEmail(String engineerEmail) {
-        List<Receipt> receiptList = new ArrayList<>();
-        try (MasterDao masterDao = daoFactory.createMasterDao()) {
-            receiptList = masterDao.getInvoicesByEmail(engineerEmail);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        return receiptList;
+        return masters;
     }
 
     public List<Receipt> getReceiptsByMaster(String login) {

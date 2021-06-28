@@ -143,12 +143,5 @@
 <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
     <img align="center" height="540" width="960" src="https://i.gifer.com/8AIa.gif">
 </div>
-<%--<img align="center" height="576" width="475" src="https://www.asus.com/websites/global/products/hhipmzfnyiRcLlui/images/5xp/over.gif">--%>
-<footer>
-    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-        © 2021 All right reserved:
-        <a class="text-reset fw-bold">repair-agency.com</a>
-    </div>
-</footer>
 </body>
 </html>

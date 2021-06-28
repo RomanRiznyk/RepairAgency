@@ -66,12 +66,10 @@
             <c:when test="${sessionScope.lang == null || 'en'.equals(sessionScope.lang)}">
                 <form action="login" method="post">
                     <input type="hidden" name="lang" value="ua">
-                    <input type="hidden" name="command" value="login">
                     <input type="submit" value="<fmt:message key='Ua'/>" class="w-100 btn btn-outline-secondary">
                 </form>
                 <form action="login" method="post" class="mx-2">
                     <input type="hidden" name="lang" value="en">
-                    <input type="hidden" name="command" value="login">
                     <input type="submit" value="<fmt:message key='En'/>" class="w-100 btn btn-secondary">
                 </form>
             </c:when>
@@ -79,12 +77,10 @@
             <c:when test="${'ua'.equals(sessionScope.lang)}">
                 <form action="login" method="post">
                     <input type="hidden" name="lang" value="ua">
-                    <input type="hidden" name="command" value="login">
                     <input type="submit" value="<fmt:message key='Ua'/>" class="w-100 btn btn-secondary">
                 </form>
                 <form action="login" method="post" class="mx-2">
                     <input type="hidden" name="lang" value="en">
-                    <input type="hidden" name="command" value="login">
                     <input type="submit" value="<fmt:message key='En'/>" class="w-100 btn btn-outline-secondary">
                 </form>
             </c:when>
@@ -102,7 +98,6 @@
                         <input type="submit" value="<fmt:message key='MainPage'/>" class="btn btn-outline-secondary me-2">
                     </form>
                     <form action="/repair/register" method="post" class="form">
-                        <input type="hidden" name="command" value="register">
                         <input type="submit" value="<fmt:message key='Register'/>" class="btn btn-secondary me-2">
                     </form>
 
@@ -143,12 +138,9 @@
             <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" value="123">
             <label for="floatingPassword"><fmt:message key='Password'/></label>
         </div>
-
-        <input class="btn btn-secondary" type="hidden" name="command" value="account">
         <input class="w-100 btn btn-lg btn-secondary" type="submit" value="<fmt:message key='LogIn'/>">
         <p class="mt-5 mb-3 text-muted"><%--&copy; 2021--%></p>
     </form>
 </main>
-
 </body>
 </html>

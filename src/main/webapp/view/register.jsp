@@ -49,8 +49,8 @@
 
         .form-signin input[type="password"] {
             margin-bottom: 10px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
+           /* border-top-left-radius: 0;
+            border-top-right-radius: 0;*/
         }
     </style>
 </head>
@@ -89,11 +89,9 @@
             <c:choose>
                 <c:when test="${!sessionScope.role.equals('USER') && !sessionScope.role.equals('MANAGER') && !sessionScope.role.equals('MASTER')}">
                     <form action="login" method="post">
-                        <input type="hidden" name="command" value="login" class="m-r-2">
                         <input type="submit" value="<fmt:message key='Login'/>" class="btn btn-outline-secondary me-2">
                     </form>
                     <form action="/repair" method="post" class="form">
-                        <%--<input type="hidden" name="command" value="register">--%>
                         <input type="submit" value="<fmt:message key='MainPage'/>" class="btn btn-secondary me-2">
                     </form>
                 </c:when>
@@ -108,24 +106,26 @@
         <h1 class="h3 mb-3 fw-normal"><fmt:message key='RegisterMessage'/></h1>
 
         <%----------------------- VALIDATION ERROR MESSAGES ---------------------%>
+
+        ${errorMessage}
         <c:choose>
             <c:when test="${'ShouldBeNotNull'.equals(errorMessage)}">
-                <p class="h3 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='ShouldBeNotNull'/></p>
+                <p class="h5 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='ShouldBeNotNull'/></p>
             </c:when>
             <c:when test="${'ShouldBeValidLogin'.equals(errorMessage)}">
-                <p class="h3 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='ShouldBeValidLogin'/></p>
+                <p class="h5 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='ShouldBeValidLogin'/></p>
             </c:when>
             <c:when test="${'ShouldBeValidPassword'.equals(errorMessage)}">
-                <p class="h3 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='ShouldBeValidPassword'/></p>
+                <p class="h5 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='ShouldBeValidPassword'/></p>
             </c:when>
             <c:when test="${'ShouldBeValidEmail'.equals(errorMessage)}">
-                <p class="h3 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='ShouldBeValidEmail'/></p>
+                <p class="h5 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='ShouldBeValidEmail'/></p>
             </c:when>
-            <c:when test="${'AlreadyExist'.equals(errorMessage)}">
-                <p class="h3 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='AlreadyExist'/></p>
+            <c:when test="${errorMessage.contains('AlreadyExist')}">
+                <p class="h5 mb-3 fw-normal" style="color:#ff0000"> ${errorMessage.replace('AlreadyExist', '')} <fmt:message key='AlreadyExist'/></p>
             </c:when>
             <c:when test="${'ShouldBeEquals'.equals(errorMessage)}">
-                <p class="h3 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='ShouldBeEquals'/></p>
+                <p class="h5 mb-3 fw-normal" style="color:#ff0000"><fmt:message key='ShouldBeEquals'/></p>
             </c:when>
         </c:choose>
 
@@ -145,20 +145,9 @@
             <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
             <label for="floatingInput"><fmt:message key='Email'/></label>
         </div>
-
-        <input class="btn btn-secondary" type="hidden" name="command" value="registerSuccess">
         <input class="w-100 btn btn-lg btn-secondary" type="submit" value="<fmt:message key='Register'/>">
         <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
     </form>
 </main>
-<!--<form action="success-page" method="post">
-    <input type="hidden" name="command" value="registerSuccess">
-    <h1>Please register account</h1>
-    <p>Login</p><input type="text" name="login" value="user">
-    <br>
-    <p>Password</p><input type="password" name="password">
-    <br>
-    <input type="submit" value="Submit">
-</form>-->
 </body>
 </html>

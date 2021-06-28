@@ -67,26 +67,6 @@ public class ManagerService {
         return receipt;
     }
 
-    public List<User> getAllUsers() {
-        List<User> userList = new ArrayList<>();
-        try (ManagerDao managerDao = daoFactory.createManagerDao()) {
-            userList = managerDao.getAllUsers();
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        return userList;
-    }
-
-    public boolean setUsersWallet(String userId, String walletValue) {
-        boolean result = false;
-        try (ManagerDao managerDao = daoFactory.createManagerDao()) {
-            result = managerDao.setUserBalance(userId, walletValue);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        return result;
-    }
-
     public List<Receipt> getReceiptsByStatus(String status) {
         List<Receipt> receiptList = new ArrayList<>();
         try (ManagerDao managerDao = daoFactory.createManagerDao()) {

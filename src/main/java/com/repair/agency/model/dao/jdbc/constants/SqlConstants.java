@@ -42,7 +42,7 @@ public interface SqlConstants { //todo what type of class it should be?
     String INSERT_USER = "INSERT INTO user (login, password) VALUES (?, ?)";  //todo login password only and balance
     String INSERT_USER_WITH_MAIL = "INSERT INTO user (login, password, email) VALUES (?, ?, ?)";  //todo login password only and balance
 
-    String FIND_RECEIPT_BY_ID_WITH_USER_MASTER_LOGINS = "SELECT receipt.id, item, description, price, feedback, user_id, customer.login, master_id, masters.login, status, receipt.create_time, update_time\n" +
+    String FIND_RECEIPT_BY_ID_WITH_USER_MASTER_LOGINS = "SELECT receipt.id, item, description, price, feedback, user_id, customer.login cut, master_id, masters.login mas, status, receipt.create_time, update_time\n" +
             "FROM receipt LEFT JOIN user AS customer\n" +
             "ON receipt.user_id = customer.id \n" +
             "LEFT JOIN user AS masters\n" +

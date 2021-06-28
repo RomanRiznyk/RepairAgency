@@ -17,16 +17,6 @@ public class UserService {
     DaoFactory daoFactory = DaoFactory.getInstance();
     private static final Logger logger = LogManager.getLogger(JdbcManagerDao.class.getName());
 
-    public User findUser(String email, String password) {
-        User user = new User();
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            user = userDao.getUserByLoginPassword(email, password);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        return user;
-    }
-
     public Optional<User> findUserByLogin(String login) {
         try (UserDao userDao = daoFactory.createUserDao()) {
             return userDao.getUserByLogin(login);
@@ -36,82 +26,44 @@ public class UserService {
         return Optional.empty();
     }
 
-    public boolean insertUser(String email, String login, String password) {
-        boolean result = false;
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            result = userDao.insertUser(email, login, password);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        return result;
-    }
-
-    public List<Receipt> selectInvoicesByEmail(String email) {
-        List<Receipt> userInvoicesList = new ArrayList<>();
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            userInvoicesList = userDao.getReceiptsByUserEmail(email);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        return userInvoicesList;
-    }
-
     public boolean createReceipt(String login, String item, String description) {
-        boolean result = false;
+        boolean isSuccess = false;
         try (UserDao userDao = daoFactory.createUserDao()) {
-            result = userDao.createReceipt(login, item, description);
+            isSuccess = userDao.createReceipt(login, item, description);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return result;
+        return isSuccess;
     }
 
     public boolean createReceiptWithMaster(String login, String item, String description, String masterLogin) {
-        boolean result = false;
+        boolean isSuccess = false;
         try (UserDao userDao = daoFactory.createUserDao()) {
-            result = userDao.createReceiptWithMaster(login , item, description, masterLogin);
+            isSuccess = userDao.createReceiptWithMaster(login , item, description, masterLogin);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return result;
+        return isSuccess;
     }
 
     public boolean addFeedback(int receiptId, String feedback) {
-        boolean result = false;
+        boolean isSuccess = false;
         try (UserDao userDao = daoFactory.createUserDao()) {
-            result = userDao.addFeedback(receiptId, feedback);
+            isSuccess = userDao.addFeedback(receiptId, feedback);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return result;
+        return isSuccess;
     }
 
     public boolean updateBalanceByLogin(String invoiceUser, BigDecimal price) {
-        boolean result = false;
+        boolean isSuccess = false;
         try (UserDao userDao = daoFactory.createUserDao()) {
-            result = userDao.updateUserBalance(invoiceUser, price);
+            isSuccess = userDao.updateUserBalance(invoiceUser, price);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
-        return result;
-    }
-
-    public User getUserByEmail(String email) {
-        User user = new User();
-        try (UserDao userDao = daoFactory.createUserDao()) {
-            user = userDao.getUserByEmail(email);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-        return user;
-    }
-
-    public User getUser(String login) {
-        User user = new User();
-        //todo
-        return user;
-
-
+        return isSuccess;
     }
 
     public BigDecimal getBalance(String login) {
@@ -122,11 +74,6 @@ public class UserService {
             logger.error(e.getMessage());
         }
         return balance;
-
-
-
-
-
     }
 
     public List<Receipt> getReceiptsByLogin(String login) {

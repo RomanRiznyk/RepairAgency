@@ -1,6 +1,6 @@
 package com.repair.agency.controller.filters;
 
-import com.repair.agency.controller.command.Util;
+import com.repair.agency.controller.utils.ValidationUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,7 +40,7 @@ public class EncodingFilter implements Filter {
         session.setAttribute(LANG, lang);
 
         logger.info(LANG + " is set " + lang);
-        Util.loggingEnds(this, logger);
+        ValidationUtil.loggingEnds(this, logger);
         filterChain.doFilter(servletRequest,servletResponse);
     }
 

@@ -87,12 +87,8 @@
 
 
 <%--------------- MAIN BODY -------------------%>
-        <h3 class="fw-normal"><fmt:message key='Hello'/> <span style='color: blue;'>${sessionScope.login}</span>! </h3>
+        <h3 class="fw-normal"><fmt:message key='Hello'/> <span style='color: green;'>${sessionScope.login}</span>! </h3>
         <h3 class="fw-normal"><fmt:message key='YourBalance'/> <span style='color: green;'>${sessionScope.user.balance}</span> </h3>
-<hr>
-        Error = ${errorMessage}<br>
-        Success = ${successMessage}<br>
-        Registersuccess = ${registerSuccess}<br>
 <hr>
         <br>
             <c:choose>
@@ -150,7 +146,6 @@
                                 <c:when test="${receipt.status.equals('Done') && (receipt.feedback == null || ''.equals(receipt.feedback)) }">
                                     <form action="user/feedback" method="post">
                                         <input type="hidden" name="item" value="${receipt.item}">
-                                        <%--<input type="hidden" name="description" value="${receipt.description}"> --%><%--// todo remove it after testing--%>
                                         <input type="hidden" name="id" value="${receipt.id}">
                                         <input type="submit" value="<fmt:message key='PostFeedback'/>" class="btn btn-outline-secondary me-2">
                                     </form>
@@ -164,10 +159,6 @@
             </c:otherwise>
         </c:choose>
         <footer>
-            <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-                © 2021 Copyright:
-                <a class="text-reset fw-bold">repair-agency.com</a>
-            </div>
         </footer>
     </c:when>
     <c:when test="${!sessionScope.role.equals('USER')}">
